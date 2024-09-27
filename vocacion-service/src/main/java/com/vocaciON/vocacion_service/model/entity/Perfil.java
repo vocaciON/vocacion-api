@@ -22,8 +22,13 @@ public class Perfil {
     @Column(name = "datos_personales", nullable = false)
     private String datosPersonales;
 
-    @OneToOne
-    @JoinColumn(name = "usuario_id", referencedColumnName = "idUsuario", nullable = false)
-    private Usuario usuario;
+
+    @OneToMany
+    private List<ContenidoEducativo> contenidoEducativo;
+
+
+
+
+
 
 }

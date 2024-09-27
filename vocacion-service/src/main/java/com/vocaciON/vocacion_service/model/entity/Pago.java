@@ -25,7 +25,7 @@ public class Pago {
 
     @Column(name = "fecha", nullable = false)
     private LocalDateTime fecha;
-
+// verificando si se agregocomo clave forania , aun esta para modificar
     @ManyToOne
     @JoinColumn(name = "usuario_id", referencedColumnName = "idUsuario", nullable = false)
     private Usuario usuario;

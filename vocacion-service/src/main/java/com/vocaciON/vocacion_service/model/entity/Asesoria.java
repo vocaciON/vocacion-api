@@ -18,7 +18,7 @@ import java.util.Date;
 public class Asesoria {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idAsesoria;
+    private Long id;
 
     @Column(name = "fecha", nullable = false)
     private LocalDateTime fecha;
@@ -26,13 +26,13 @@ public class Asesoria {
     @Column(name = "estado", nullable = false)
     private String estado;
 
-    @ManyToOne
+    /*@ManyToOne
     @JoinColumn(name = "usuario_id", referencedColumnName = "idUsuario", nullable = false)
     private Usuario usuario;
 
     @ManyToOne
     @JoinColumn(name = "experto_id", referencedColumnName = "id", nullable = false)
-    private Experto experto;
+    private Experto experto;*/
 
 
 

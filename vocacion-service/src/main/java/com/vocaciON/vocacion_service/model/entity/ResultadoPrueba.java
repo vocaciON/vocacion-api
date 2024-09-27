@@ -26,13 +26,13 @@ public class ResultadoPrueba {
     @Column(name = "feedback")
     private String feedback;
 
-    @ManyToOne
+    /*@ManyToOne
     @JoinColumn(name = "prueba_id", referencedColumnName = "id", nullable = false)
     private PruebaVocacion pruebaVocacion;
 
     @ManyToOne
     @JoinColumn(name = "usuario_id", referencedColumnName = "idUsuario", nullable = false)
-    private Usuario usuario;
+    private Usuario usuario;*/
 
 
 }
