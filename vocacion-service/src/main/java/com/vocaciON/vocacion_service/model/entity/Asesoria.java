@@ -1,5 +1,6 @@
 package com.vocaciON.vocacion_service.model.entity;
 
+import com.vocaciON.vocacion_service.model.enums.EstadoAsesoria;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,6 +34,14 @@ public class Asesoria {
     @ManyToOne
     @JoinColumn(name = "experto_id", referencedColumnName = "id", nullable = false)
     private Experto experto;*/
+    @ManyToOne
+    @JoinColumn(name = "experto_id", referencedColumnName = "id",
+    foreignKey = @ForeignKey(name = "FK_asesoria_experto"))
+    private Experto experto;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "estadoAsesoria")
+    private EstadoAsesoria estadoAsesoria;
 
 
 

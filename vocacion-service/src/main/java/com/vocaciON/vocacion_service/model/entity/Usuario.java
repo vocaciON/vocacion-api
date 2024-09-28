@@ -21,7 +21,7 @@ public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idUsuario;
+    private Long id;
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;
@@ -49,9 +49,9 @@ public class Usuario {
     private Pago pago;
 
     @OneToMany
-    @JoinColumn(name = "resultadoPrueba_id", referencedColumnName = "id"
-    , foreignKey = @ForeignKey(name = "FK_usuario_resultadoPrueba"))
-    private List<ResultadoPrueba> resultadoPrueba;
+    @JoinColumn(name = "pruebaVocacion_id", referencedColumnName = "id",
+    foreignKey = @ForeignKey (name = "FK_pruebaVocacion_Usuario"))
+    private List<PruebaVocacion> pruebaVocacion;
 
     @OneToMany
     @JoinColumn(name = "asesoria_id", referencedColumnName = "id"
@@ -60,8 +60,9 @@ public class Usuario {
 
 //Agregando los roles del enum a usuario
     @Enumerated(EnumType.STRING)
+    @Column(name = "usuario_Rol")
     private Role role;
-    private EstadoPago estadoPago;
+
 
 
 }

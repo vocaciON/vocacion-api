@@ -23,7 +23,7 @@ public class Perfil {
     private String datosPersonales;
 
 
-    @OneToMany
+    @OneToMany(mappedBy = "perfil",cascade = CascadeType.ALL)
     private List<ContenidoEducativo> contenidoEducativo;
 
 

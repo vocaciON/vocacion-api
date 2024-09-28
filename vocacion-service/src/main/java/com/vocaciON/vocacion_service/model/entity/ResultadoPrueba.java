@@ -34,5 +34,9 @@ public class ResultadoPrueba {
     @JoinColumn(name = "usuario_id", referencedColumnName = "idUsuario", nullable = false)
     private Usuario usuario;*/
 
+    @OneToOne(mappedBy = "resultadoPrueba", cascade = CascadeType.ALL)
+    private PruebaVocacion pruebaVocacion;
+
+
 
 }

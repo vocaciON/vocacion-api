@@ -29,4 +29,10 @@ public class PruebaVocacion {
 
     @Column(name = "limite_tiempo")
     private Integer limiteTiempo;
+
+
+    @OneToOne
+    @JoinColumn(name = "resultadoPrueba_id", referencedColumnName = "id"
+    , foreignKey = @ForeignKey(name = "FK_pruebaVocacion_resultadoPrueba"))
+    private ResultadoPrueba resultadoPrueba;
 }
