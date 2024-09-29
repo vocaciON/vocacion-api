@@ -18,7 +18,10 @@ public class ContenidoEducativo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "tipo")
+    @Column(name = "nombre", nullable = false)
+    private String nombre;
+
+    @Column(name = "tipo", nullable = false)
     private String tipo;
 
     @Column(name = "contenido", nullable = false)

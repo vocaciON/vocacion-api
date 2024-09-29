@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 @Data
 @NoArgsConstructor
@@ -35,4 +36,8 @@ public class PruebaVocacion {
     @JoinColumn(name = "resultadoPrueba_id", referencedColumnName = "id"
     , foreignKey = @ForeignKey(name = "FK_pruebaVocacion_resultadoPrueba"))
     private ResultadoPrueba resultadoPrueba;
+
+    public static void setCreatedAd(LocalDateTime now) {
+
+    }
 }
