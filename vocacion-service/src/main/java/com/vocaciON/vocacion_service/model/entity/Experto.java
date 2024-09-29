@@ -28,4 +28,8 @@ public class Experto {
 
     @Column(name = "disponibilidad")
     private String disponibilidad;
+
+
+    @OneToMany(mappedBy = "experto", cascade = CascadeType.ALL)
+    private List<Asesoria> asesoria;
 }

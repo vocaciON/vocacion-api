@@ -1,5 +1,6 @@
 package com.vocaciON.vocacion_service.model.entity;
 
+import com.vocaciON.vocacion_service.model.enums.EstadoPago;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,8 +26,12 @@ public class Pago {
 
     @Column(name = "fecha", nullable = false)
     private LocalDateTime fecha;
-
+// verificando si se agregocomo clave forania , aun esta para modificar
     @ManyToOne
-    @JoinColumn(name = "usuario_id", referencedColumnName = "idUsuario", nullable = false)
+    @JoinColumn(name = "usuario_id", referencedColumnName = "id", nullable = false)
     private Usuario usuario;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "estadoPago")
+    private EstadoPago estadoPago;
 }

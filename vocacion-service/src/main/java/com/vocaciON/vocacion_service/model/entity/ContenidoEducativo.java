@@ -27,5 +27,10 @@ public class ContenidoEducativo {
     @Column(name = "favorito")
     private Boolean favorito;
 
+    @ManyToOne
+    @JoinColumn(name = "perfil_id",referencedColumnName = "id",
+    foreignKey = @ForeignKey(name = "FK_contenidoEducativo_perfil"))
+    private Perfil perfil;
+
 
 }

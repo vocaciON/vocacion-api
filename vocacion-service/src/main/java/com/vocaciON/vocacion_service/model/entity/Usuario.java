@@ -21,7 +21,7 @@ public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idUsuario;
+    private Long id;
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;
@@ -35,9 +35,34 @@ public class Usuario {
     @Column(name = "telefono")
     private String telefono;
 
+// Agregando como se relacionan con las tablas
+
+//Clase usuario se asocia con perfil , pago, resultadoprueba,asesoria
+    @OneToOne
+    @JoinColumn(name = "perfil_id", referencedColumnName = "id"
+    , foreignKey = @ForeignKey(name = "FK_usuario_perfil"))
+    private Perfil perfil;
+
+    @OneToOne
+    @JoinColumn(name="pago_id", referencedColumnName = "id"
+    , foreignKey = @ForeignKey(name = "FK_usuario_pago"))
+    private Pago pago;
+
+    @OneToMany
+    @JoinColumn(name = "pruebaVocacion_id", referencedColumnName = "id",
+    foreignKey = @ForeignKey (name = "FK_pruebaVocacion_Usuario"))
+    private List<PruebaVocacion> pruebaVocacion;
+
+    @OneToMany
+    @JoinColumn(name = "asesoria_id", referencedColumnName = "id"
+    ,foreignKey = @ForeignKey(name = "FK_usuario_asesoria"))
+    private List<Asesoria> asesoria;
+
+//Agregando los roles del enum a usuario
     @Enumerated(EnumType.STRING)
+    @Column(name = "usuario_Rol")
     private Role role;
-    private EstadoPago estadoPago;
+
 
 
 }
