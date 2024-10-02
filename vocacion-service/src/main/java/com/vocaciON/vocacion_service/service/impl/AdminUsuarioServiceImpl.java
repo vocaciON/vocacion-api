@@ -19,7 +19,7 @@ import java.util.List;
 public class AdminUsuarioServiceImpl implements AdminUsuarioService {
 
     private final UsuarioRepositoy usuarioRepositoy;
-    private final ExpertoRepository expertoRepository;
+
 
     @Transactional(readOnly = true)
     @Override

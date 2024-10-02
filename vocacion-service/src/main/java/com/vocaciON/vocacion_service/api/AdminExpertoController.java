@@ -26,45 +26,45 @@ public class AdminExpertoController {
     //vamos con los metodos
     // Responder las listas
     @GetMapping
-    public ResponseEntity<List<PruebaVocacional>>getListaExpertos(){
-        List<PruebaVocacional> expertos = adminExpertoService.getAll();
-        return new ResponseEntity<List<PruebaVocacional>>(expertos, HttpStatus.OK); //ok = 200
+    public ResponseEntity<List<Experto>>getListaExpertos(){
+        List<Experto> expertos = adminExpertoService.getAll();
+        return new ResponseEntity<List<Experto>>(expertos, HttpStatus.OK); //ok = 200
     }
 
     //Metodo para obtener por medio del id
     @GetMapping("/{id}")
-    public ResponseEntity<PruebaVocacional> getExpertoById(@PathVariable("id") Long id){
-        PruebaVocacional experto = adminExpertoService.findById(id);
-        return new ResponseEntity<PruebaVocacional>(experto, HttpStatus.OK);
+    public ResponseEntity<Experto> getExpertoById(@PathVariable("id") Long id){
+        Experto experto = adminExpertoService.findById(id);
+        return new ResponseEntity<Experto>(experto, HttpStatus.OK);
     }
 
 
     //Ahora haremos el regististro, Postmappin
 
     @PostMapping
-    public ResponseEntity<PruebaVocacional> createExperto(@RequestBody PruebaVocacional experto){
+    public ResponseEntity<Experto> createExperto(@RequestBody Experto experto){
 
-        PruebaVocacional newExperto = adminExpertoService.create(experto);
-        return new ResponseEntity<PruebaVocacional>(newExperto, HttpStatus.CREATED);
+        Experto newExperto = adminExpertoService.create(experto);
+        return new ResponseEntity<Experto>(newExperto, HttpStatus.CREATED);
 
     }
 
     //Put metodo para la actualizacion
     @PutMapping("/{id}")
-    public ResponseEntity<PruebaVocacional> updateExperto(@PathVariable("id") Long id,
-                                                          @RequestBody PruebaVocacional experto){
+    public ResponseEntity<Experto> updateExperto(@PathVariable("id") Long id,
+                                                          @RequestBody Experto experto){
 
-        PruebaVocacional updateExperto = adminExpertoService.update(id,experto);
-        return new ResponseEntity<PruebaVocacional>(updateExperto, HttpStatus.OK);
+        Experto updateExperto = adminExpertoService.update(id,experto);
+        return new ResponseEntity<Experto>(updateExperto, HttpStatus.OK);
 
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<PruebaVocacional> deleteExperto(@PathVariable("id") Long id,
-                                                          @RequestBody PruebaVocacional experto){
+    public ResponseEntity<Experto> deleteExperto(@PathVariable("id") Long id,
+                                                          @RequestBody Experto experto){
 
         adminExpertoService.delete(id);
-        return new ResponseEntity<PruebaVocacional>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<Experto>(HttpStatus.NO_CONTENT);
 
     }
 }
