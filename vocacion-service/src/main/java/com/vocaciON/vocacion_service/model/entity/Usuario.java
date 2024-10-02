@@ -38,6 +38,14 @@ public class Usuario {
     @Column(name = "telefono")
     private String telefono;
 
+    //ADAPTANDO AL NUEVO DIAGRAMA DE CLASES
+    @Column(name = "fechaCreate")
+    private Date fechaCreate;
+
+    @Column(name = "fechaUpdate")
+    private Date fechaUpdate;
+    @Column(name= "fechaNacimiento")
+    private Date fechaNacimiento;
 
 
 // Agregando como se relacionan con las tablas

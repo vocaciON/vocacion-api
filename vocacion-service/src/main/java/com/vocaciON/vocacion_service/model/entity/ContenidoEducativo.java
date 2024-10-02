@@ -18,8 +18,8 @@ public class ContenidoEducativo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nombre", nullable = false)
-    private String nombre;
+    @Column(name = "tituloContenido", nullable = false)
+    private String tituloContenido;
 
     @Column(name = "tipo", nullable = false)
     private String tipo;
@@ -29,6 +29,9 @@ public class ContenidoEducativo {
 
     @Column(name = "favorito")
     private Boolean favorito;
+
+    @Column(name = "link")
+    private String link;
 
     @ManyToOne
     @JoinColumn(name = "perfil_id",referencedColumnName = "id",

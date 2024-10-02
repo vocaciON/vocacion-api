@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -20,8 +21,14 @@ public class Asesoria {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name="temaTratar", nullable=false)
+    private String temaTratar;
+
     @Column(name = "fecha", nullable = false)
-    private LocalDateTime fecha;
+    private Date fecha;
+
+    @Column(name = "costo")
+    private double costo;
 
     @Column(name = "estado", nullable = false)
     private String estado;
@@ -36,7 +43,7 @@ public class Asesoria {
     @ManyToOne
     @JoinColumn(name = "experto_id", referencedColumnName = "id",
     foreignKey = @ForeignKey(name = "FK_asesoria_experto"))
-    private PruebaVocacional experto;
+    private Experto experto;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "estadoAsesoria")

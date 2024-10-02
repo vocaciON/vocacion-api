@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -21,18 +22,19 @@ public class Experto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nombre", nullable = false)
-    private String nombre;
 
-    @Column(name = "apellido", nullable = false)
-    private String apellido;
+    @Column(name = "estudios", nullable = false)
+    private String estudios;
 
-    @Column(name = "area", nullable = false)
-    private String area;
-
-    @Column(name = "descripcion")
-    private String descripcion;
-
+    //Adaptando a la nueva diagrama de clases
+    @Column(name="edadExperto")
+    private Date edadExperto;
+    @Column(name="especialidad")
+    private String especialidad;
+    @Column(name="informacionPersonal")
+    private String informacionPersonal;
+    @Column(name="calificacion")
+    private String calificacion;
     @Column(name = "disponibilidad")
     private String disponibilidad;
 

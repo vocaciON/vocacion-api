@@ -48,6 +48,7 @@ public class AdminResultadoPruebaServiceImpl implements AdminResultadoPruebaServ
         ResultadoPrueba resultadoPruebaFromDB = findById(id);
         resultadoPruebaFromDB.setResultado(resultadoPruebaUpdate.getResultado());
         resultadoPruebaFromDB.setRecomendaciones(resultadoPruebaUpdate.getRecomendaciones());
+        resultadoPruebaFromDB.setFeedback(resultadoPruebaUpdate.getFeedback());
 
 
         return resultadoPruebaRepository.save(resultadoPruebaFromDB);

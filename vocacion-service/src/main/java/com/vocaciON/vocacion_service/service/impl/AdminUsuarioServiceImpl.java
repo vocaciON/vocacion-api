@@ -50,6 +50,10 @@ public class AdminUsuarioServiceImpl implements AdminUsuarioService {
         usuarioFromDB.setPassword(usuarioUpdate.getPassword());
         usuarioFromDB.setEmail(usuarioUpdate.getEmail());
         usuarioFromDB.setRole(usuarioUpdate.getRole());
+        usuarioFromDB.setFechaNacimiento(usuarioUpdate.getFechaNacimiento());
+        usuarioFromDB.setFechaUpdate(usuarioUpdate.getFechaUpdate());
+        usuarioFromDB.setFechaCreate(usuarioUpdate.getFechaCreate());
+
 
         return usuarioRepositoy.save(usuarioFromDB);
     }

@@ -45,11 +45,12 @@ public class AdminExpertoServiceImpl implements AdminExpertoService {
     @Override
     public Experto update(Long id, Experto updateExperto) {//actualizar
         Experto expertoFromDB = findById(id);
-        expertoFromDB.setNombre(updateExperto.getNombre());
-        expertoFromDB.setApellido(updateExperto.getApellido());
-        expertoFromDB.setArea(updateExperto.getArea());
-        expertoFromDB.setDescripcion(updateExperto.getDescripcion());
+        expertoFromDB.setInformacionPersonal(updateExperto.getInformacionPersonal());
+        expertoFromDB.setEdadExperto(updateExperto.getEdadExperto());
+        expertoFromDB.setEstudios(updateExperto.getEstudios());
+        expertoFromDB.setEspecialidad(updateExperto.getEspecialidad());
         expertoFromDB.setDisponibilidad(updateExperto.getDisponibilidad());
+        expertoFromDB.setCalificacion(updateExperto.getCalificacion());
 
 
         return expertoRepository.save(expertoFromDB);

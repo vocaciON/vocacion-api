@@ -52,6 +52,8 @@ public class AdminPruebaVocacionServiceImpl implements AdminPruebaVocacionServic
         pruebaVocacionFromDB.setDescripcion(UpdatePruebaVocacion.getDescripcion());
         pruebaVocacionFromDB.setTipo(UpdatePruebaVocacion.getTipo());
         pruebaVocacionFromDB.setLimiteTiempo(UpdatePruebaVocacion.getLimiteTiempo());
+        pruebaVocacionFromDB.setPreguntas(UpdatePruebaVocacion.getPreguntas());
+        pruebaVocacionFromDB.setRespuestas(UpdatePruebaVocacion.getRespuestas());
 
         return pruebaVocacionRepository.save(pruebaVocacionFromDB);
     }

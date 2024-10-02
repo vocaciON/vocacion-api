@@ -40,10 +40,13 @@ public class AdminContenidoEducativoServiceImpl implements AdminContenidoEducati
     public ContenidoEducativo update(Long id, ContenidoEducativo updateContenidoEducativo) {
         ContenidoEducativo contenidoEducativoFromDB = findById(id);
 
-        contenidoEducativoFromDB.setNombre(updateContenidoEducativo.getNombre());
+
         contenidoEducativoFromDB.setTipo(updateContenidoEducativo.getTipo());
         contenidoEducativoFromDB.setContenido(updateContenidoEducativo.getContenido());
         contenidoEducativoFromDB.setFavorito(updateContenidoEducativo.getFavorito());
+        contenidoEducativoFromDB.setTituloContenido(updateContenidoEducativo.getTituloContenido());
+        contenidoEducativoFromDB.setLink(updateContenidoEducativo.getLink());
+
 
         return contenidoEducativoRepository.save(contenidoEducativoFromDB);
     }

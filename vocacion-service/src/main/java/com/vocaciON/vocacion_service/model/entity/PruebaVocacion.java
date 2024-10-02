@@ -28,6 +28,12 @@ public class PruebaVocacion {
     @Column(name = "tipo")
     private String tipo;
 
+    @Column(name = "preguntas")
+    private String preguntas;
+
+    @Column(name = "Respuestas")
+    private String respuestas;
+
     @Column(name = "limite_tiempo")
     private Integer limiteTiempo;
 
