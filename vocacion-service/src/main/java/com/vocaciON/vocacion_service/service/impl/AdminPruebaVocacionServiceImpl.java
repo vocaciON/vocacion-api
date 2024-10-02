@@ -1,7 +1,6 @@
 package com.vocaciON.vocacion_service.service.impl;
 
 
-import com.vocaciON.vocacion_service.exception.ResourceNotFoundException;
 import com.vocaciON.vocacion_service.model.entity.PruebaVocacion;
 import com.vocaciON.vocacion_service.repository.PruebaVocacionRepository;
 import com.vocaciON.vocacion_service.service.AdminPruebaVocacionService;

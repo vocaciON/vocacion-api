@@ -1,7 +1,6 @@
 package com.vocaciON.vocacion_service.api;
 
 
-import com.vocaciON.vocacion_service.model.entity.Experto;
 import com.vocaciON.vocacion_service.model.entity.Usuario;
 import com.vocaciON.vocacion_service.service.AdminUsuarioService;
 import lombok.RequiredArgsConstructor;

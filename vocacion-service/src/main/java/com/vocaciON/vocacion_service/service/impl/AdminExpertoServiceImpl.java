@@ -1,8 +1,7 @@
 package com.vocaciON.vocacion_service.service.impl;
 // Estas clases van a contener la implementacion
 
-import com.vocaciON.vocacion_service.exception.ResourceNotFoundException;
-import com.vocaciON.vocacion_service.model.entity.Experto;
+import com.vocaciON.vocacion_service.model.entity.PruebaVocacional;
 import com.vocaciON.vocacion_service.repository.ExpertoRepository;
 import com.vocaciON.vocacion_service.service.AdminExpertoService;
 import lombok.Data;
@@ -24,12 +23,12 @@ public class AdminExpertoServiceImpl implements AdminExpertoService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<Experto> getAll() {
+    public List<PruebaVocacional> getAll() {
         return expertoRepository.findAll();//obtener todos
     }
     @Transactional(readOnly = true)
     @Override
-    public Experto findById(Long id) { //buscar
+    public PruebaVocacional findById(Long id) { //buscar
         return expertoRepository.findById(id).orElseThrow(
                 () -> new RuntimeException("Experto  no encontrado"));
 
@@ -37,15 +36,15 @@ public class AdminExpertoServiceImpl implements AdminExpertoService {
 
     @Transactional
     @Override
-    public Experto create(Experto experto) { //crear
+    public PruebaVocacional create(PruebaVocacional experto) { //crear
         experto.setCreatedAt(LocalDateTime.now());// setear la fecha de creacion
         return expertoRepository.save(experto);
     }
 
     @Transactional
     @Override
-    public Experto update(Long id, Experto updateExperto) {//actualizar
-        Experto expertoFromDB = findById(id);
+    public PruebaVocacional update(Long id, PruebaVocacional updateExperto) {//actualizar
+        PruebaVocacional expertoFromDB = findById(id);
         expertoFromDB.setNombre(updateExperto.getNombre());
         expertoFromDB.setApellido(updateExperto.getApellido());
         expertoFromDB.setArea(updateExperto.getArea());
@@ -59,7 +58,7 @@ public class AdminExpertoServiceImpl implements AdminExpertoService {
     @Transactional
     @Override
     public void delete(Long id) {
-        Experto experto = findById(id);
+        PruebaVocacional experto = findById(id);
         expertoRepository.delete(experto);
 
     }

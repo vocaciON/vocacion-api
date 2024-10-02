@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -37,7 +36,7 @@ public class Asesoria {
     @ManyToOne
     @JoinColumn(name = "experto_id", referencedColumnName = "id",
     foreignKey = @ForeignKey(name = "FK_asesoria_experto"))
-    private Experto experto;
+    private PruebaVocacional experto;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "estadoAsesoria")
