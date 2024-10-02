@@ -1,7 +1,7 @@
 package com.vocaciON.vocacion_service.api;
 
 
-import com.vocaciON.vocacion_service.model.entity.PruebaVocacional;
+import com.vocaciON.vocacion_service.model.entity.Experto;
 import com.vocaciON.vocacion_service.service.AdminExpertoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

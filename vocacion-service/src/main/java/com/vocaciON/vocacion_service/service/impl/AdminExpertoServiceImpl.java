@@ -24,7 +24,7 @@ public class AdminExpertoServiceImpl implements AdminExpertoService {
     @Transactional(readOnly = true)
     @Override
     public List<Experto> getAll() {
-        return expertoRepository.findAll()//obtener todos
+        return expertoRepository.findAll();//obtener todos
     }
     @Transactional(readOnly = true)
     @Override
@@ -36,7 +36,7 @@ public class AdminExpertoServiceImpl implements AdminExpertoService {
 
     @Transactional
     @Override
-    public Experto create(Expero experto) { //crear
+    public Experto create(Experto experto) { //crear
         experto.setCreatedAt(LocalDateTime.now());// setear la fecha de creacion
         return expertoRepository.save(experto);
     }
