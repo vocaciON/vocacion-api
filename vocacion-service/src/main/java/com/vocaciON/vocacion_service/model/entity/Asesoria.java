@@ -21,38 +21,29 @@ public class Asesoria {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="temaTratar", nullable=false)
+    @Column(name="tema_tratar", nullable=false)
     private String temaTratar;
 
     @Column(name = "fecha", nullable = false)
-    private Date fecha;
+    private Date fechaAsesoria;
+
+    @Column(name = "link_asesoria", nullable = false)
+    private String linkAsesoria;
 
     @Column(name = "costo")
     private double costo;
 
-    @Column(name = "estado", nullable = false)
-    private String estado;
 
-    /*@ManyToOne
-    @JoinColumn(name = "usuario_id", referencedColumnName = "idUsuario", nullable = false)
-    private Usuario usuario;
 
-    @ManyToOne
-    @JoinColumn(name = "experto_id", referencedColumnName = "id", nullable = false)
-    private Experto experto;*/
-    @ManyToOne
-    @JoinColumn(name = "experto_id", referencedColumnName = "id",
-    foreignKey = @ForeignKey(name = "FK_asesoria_experto"))
-    private Experto experto;
+
+
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "estadoAsesoria")
+    @Column(name = "estado_asesoria")
     private EstadoAsesoria estadoAsesoria;
 
 
+    public void setCreatedAt(LocalDateTime now) {
 
-
-
-
-
+    }
 }

@@ -23,20 +23,40 @@ public class Perfil {
 
     @Column(name = "descripcion")
     private String descripcion;
-    @Column(name = "edadEstudiante")
+    @Column(name = "edad_estudiante")
     private int edadEstudiante;
-    @Column(name = "gradoAcademico")
+    @Column(name = "grado_academico")
     private String gradoAcademico;
-    @Column(name = "intitucionEstudio")
+    @Column(name = "institucion_estudio")
     private String institucionEstudio;
-    @Column(name = "carrerInteres")
+    @Column(name = "carrer_interes")
     private String carrerasInteres;
 
 
 
+    @OneToOne
+    @JoinColumn(name = "usuario_id",referencedColumnName = "id",
+    foreignKey = @ForeignKey(name = "FK_perfil_usuario"))
+    private Usuario usuario;
 
+    @OneToMany
+    @JoinColumn(name = "asesoria_id",referencedColumnName = "id",
+    foreignKey = @ForeignKey(name = "FK_perfil_asesoria"))
+    private List<Asesoria> asesoria;
 
-    @OneToMany(mappedBy = "perfil",cascade = CascadeType.ALL)
+    @OneToOne
+    @JoinColumn(name = "pago_id", referencedColumnName = "id",
+    foreignKey = @ForeignKey(name = "FK_perfil_pago"))
+    private Pago pago;
+
+    @OneToMany
+    @JoinColumn(name = "prueba_vocacion_id", referencedColumnName = "id",
+    foreignKey = @ForeignKey(name = "FK_perfil_prueba_vocacion"))
+    private List<PruebaVocacion> pruebaVocacion;
+
+    @OneToMany
+    @JoinColumn(name = "contenido_educativo_id",referencedColumnName = "id",
+    foreignKey = @ForeignKey(name = "FK_perfil_contenido_educativo"))
     private List<ContenidoEducativo> contenidoEducativo;
 
     public void setCreatedAt(LocalDateTime now) {

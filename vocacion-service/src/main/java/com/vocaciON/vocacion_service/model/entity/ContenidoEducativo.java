@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Entity
-@Table(name = "ContenidoEducativos")
+@Table(name = "contenido_educativos")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,7 +18,7 @@ public class ContenidoEducativo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "tituloContenido", nullable = false)
+    @Column(name = "titulo_contenido", nullable = false)
     private String tituloContenido;
 
     @Column(name = "tipo", nullable = false)
@@ -29,6 +29,8 @@ public class ContenidoEducativo {
 
     @Column(name = "favorito")
     private Boolean favorito;
+
+
 
     @Column(name = "link")
     private String link;

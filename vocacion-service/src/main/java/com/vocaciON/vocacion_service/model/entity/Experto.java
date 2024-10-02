@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 
 @Entity
-@Table(name = "Expertos")
+@Table(name = "expertos")
 
 
 public class Experto {
@@ -27,11 +27,11 @@ public class Experto {
     private String estudios;
 
     //Adaptando a la nueva diagrama de clases
-    @Column(name="edadExperto")
+    @Column(name="edad_experto")
     private Date edadExperto;
     @Column(name="especialidad")
     private String especialidad;
-    @Column(name="informacionPersonal")
+    @Column(name="informacion_personal")
     private String informacionPersonal;
     @Column(name="calificacion")
     private String calificacion;
@@ -39,8 +39,22 @@ public class Experto {
     private String disponibilidad;
 
 
-    @OneToMany(mappedBy = "experto", cascade = CascadeType.ALL)
+    @OneToOne
+    @JoinColumn(name = "usuario_id", referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "FK_experto_usuario"))
+        private Usuario usuario;
+
+
+    @OneToMany
+    @JoinColumn(name="asesoria_id", referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "FK_experto_asesoria"))
     private List<Asesoria> asesoria;
+
+
+
+
+
+
 
     public void setCreatedAt(LocalDateTime now) {
     }
