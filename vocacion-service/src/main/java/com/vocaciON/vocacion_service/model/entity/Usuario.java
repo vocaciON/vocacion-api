@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class Usuario {
 
     //ADAPTANDO AL NUEVO DIAGRAMA DE CLASES
     @Column(name = "fecha_create")
-    private Date fechaCreate;
+    private LocalDateTime fechaCreate;
 
     @Column(name = "fecha_update")
     private Date fechaUpdate;

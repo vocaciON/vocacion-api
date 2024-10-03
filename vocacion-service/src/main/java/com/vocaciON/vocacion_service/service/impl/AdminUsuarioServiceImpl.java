@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -18,6 +19,15 @@ public class AdminUsuarioServiceImpl implements AdminUsuarioService {
 
     private final UsuarioRepository usuarioRepository;
 
+    @Transactional
+    @Override
+    public Usuario registrarUsuario(Usuario usuario) {
+        if(usuarioRepository.existsByEmail(usuario.getEmail())) {
+            throw new RuntimeException("El email ya existe");
+        }
+        usuario.setFechaCreate(LocalDateTime.now());
+        return usuarioRepository.save(usuario);
+    }
 
     @Transactional(readOnly = true)
     @Override

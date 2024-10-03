@@ -5,6 +5,9 @@ import com.vocaciON.vocacion_service.model.entity.Usuario;
 import java.util.List;
 
 public interface AdminUsuarioService {
+    //Registro de usuario
+    Usuario registrarUsuario(Usuario usuario);
+
     //obtener un listado de usuarios
 
     List<Usuario> getAll();//obtener todos
