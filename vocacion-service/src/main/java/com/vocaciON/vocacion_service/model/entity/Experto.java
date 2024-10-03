@@ -45,10 +45,7 @@ public class Experto {
         private Usuario usuario;
 
 
-    @OneToMany
-    @JoinColumn(name="asesoria_id", referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "FK_experto_asesoria"))
-    private List<Asesoria> asesoria;
+
 
 
 

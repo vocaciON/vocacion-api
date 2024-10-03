@@ -3,6 +3,8 @@ package com.vocaciON.vocacion_service.service.impl;
 
 import com.vocaciON.vocacion_service.model.entity.Asesoria;
 import com.vocaciON.vocacion_service.repository.AsesoriaRepository;
+import com.vocaciON.vocacion_service.repository.ExpertoRepository;
+import com.vocaciON.vocacion_service.repository.PerfilRepository;
 import com.vocaciON.vocacion_service.service.AdminAsesoriaService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,11 @@ import java.util.List;
 public class AdminAsesoriaServiceImpl implements AdminAsesoriaService {
 
     private final AsesoriaRepository asesoriaRepository;
+    private final ExpertoRepository expertoRepository;
+    private final PerfilRepository perfilRepository;
+
+
+
 
     @Transactional(readOnly = true)
     @Override

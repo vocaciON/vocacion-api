@@ -1,15 +1,13 @@
 package com.vocaciON.vocacion_service.service.impl;
 
 import com.vocaciON.vocacion_service.model.entity.Usuario;
-import com.vocaciON.vocacion_service.repository.ExpertoRepository;
-import com.vocaciON.vocacion_service.repository.UsuarioRepositoy;
+import com.vocaciON.vocacion_service.repository.UsuarioRepository;
 import com.vocaciON.vocacion_service.service.AdminUsuarioService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -18,25 +16,25 @@ import java.util.List;
 
 public class AdminUsuarioServiceImpl implements AdminUsuarioService {
 
-    private final UsuarioRepositoy usuarioRepositoy;
+    private final UsuarioRepository usuarioRepository;
 
 
     @Transactional(readOnly = true)
     @Override
     public List<Usuario> getAll() {
-        return usuarioRepositoy.findAll(); // Obtener toda la lista
+        return usuarioRepository.findAll(); // Obtener toda la lista
     }
 
     @Transactional
     @Override
     public Usuario create(Usuario usuario) {
-        return usuarioRepositoy.save(usuario);
+        return usuarioRepository.save(usuario);
     }
 
     @Transactional(readOnly = true)
     @Override
     public Usuario findById(Long id) {
-        return usuarioRepositoy.findById(id).orElseThrow(
+        return usuarioRepository.findById(id).orElseThrow(
                 () -> new RuntimeException("Usuario no encontrado"));
     }
 
@@ -55,13 +53,13 @@ public class AdminUsuarioServiceImpl implements AdminUsuarioService {
         usuarioFromDB.setFechaCreate(usuarioUpdate.getFechaCreate());
 
 
-        return usuarioRepositoy.save(usuarioFromDB);
+        return usuarioRepository.save(usuarioFromDB);
     }
     @Transactional
     @Override
     public void delete(Long id) {
         Usuario usuario = findById(id);
-        usuarioRepositoy.delete(usuario);
+        usuarioRepository.delete(usuario);
 
     }
 }

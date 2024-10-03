@@ -37,6 +37,11 @@ public class PruebaVocacion {
     @Column(name = "limite_tiempo")
     private Integer limiteTiempo;
 
+    @ManyToOne
+    @JoinColumn(name = "perfil_id",referencedColumnName = "id",
+    foreignKey = @ForeignKey(name = "FK_prueba_vocacion_perfil"))
+    private Perfil perfil;
+
 
     @OneToOne
     @JoinColumn(name = "resultadoPrueba_id", referencedColumnName = "id"

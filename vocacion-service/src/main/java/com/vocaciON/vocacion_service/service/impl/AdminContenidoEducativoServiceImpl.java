@@ -3,6 +3,7 @@ package com.vocaciON.vocacion_service.service.impl;
 import com.vocaciON.vocacion_service.exception.ResourceNotFoundException;
 import com.vocaciON.vocacion_service.model.entity.ContenidoEducativo;
 import com.vocaciON.vocacion_service.repository.ContenidoEducativoRepository;
+import com.vocaciON.vocacion_service.repository.PerfilRepository;
 import com.vocaciON.vocacion_service.service.AdminContenidoEducativoService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ import java.util.List;
 public class AdminContenidoEducativoServiceImpl implements AdminContenidoEducativoService {
 
     private final ContenidoEducativoRepository contenidoEducativoRepository;
+    private final PerfilRepository perfilRepository;
 
     @Transactional(readOnly = true)
     @Override

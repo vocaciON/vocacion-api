@@ -39,25 +39,9 @@ public class Perfil {
     foreignKey = @ForeignKey(name = "FK_perfil_usuario"))
     private Usuario usuario;
 
-    @OneToMany
-    @JoinColumn(name = "asesoria_id",referencedColumnName = "id",
-    foreignKey = @ForeignKey(name = "FK_perfil_asesoria"))
-    private List<Asesoria> asesoria;
 
-    @OneToOne
-    @JoinColumn(name = "pago_id", referencedColumnName = "id",
-    foreignKey = @ForeignKey(name = "FK_perfil_pago"))
-    private Pago pago;
 
-    @OneToMany
-    @JoinColumn(name = "prueba_vocacion_id", referencedColumnName = "id",
-    foreignKey = @ForeignKey(name = "FK_perfil_prueba_vocacion"))
-    private List<PruebaVocacion> pruebaVocacion;
 
-    @OneToMany
-    @JoinColumn(name = "contenido_educativo_id",referencedColumnName = "id",
-    foreignKey = @ForeignKey(name = "FK_perfil_contenido_educativo"))
-    private List<ContenidoEducativo> contenidoEducativo;
 
     public void setCreatedAt(LocalDateTime now) {
     }

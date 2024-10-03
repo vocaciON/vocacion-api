@@ -3,6 +3,7 @@ package com.vocaciON.vocacion_service.service.impl;
 
 import com.vocaciON.vocacion_service.model.entity.Experto;
 import com.vocaciON.vocacion_service.repository.ExpertoRepository;
+import com.vocaciON.vocacion_service.repository.UsuarioRepository;
 import com.vocaciON.vocacion_service.service.AdminExpertoService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import java.util.List;
 public class AdminExpertoServiceImpl implements AdminExpertoService {
 
     private final ExpertoRepository expertoRepository;
+    private final UsuarioRepository usuarioRepository;
 
 
     @Transactional(readOnly = true)

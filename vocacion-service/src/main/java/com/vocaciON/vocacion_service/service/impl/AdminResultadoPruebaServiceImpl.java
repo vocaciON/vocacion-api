@@ -1,10 +1,7 @@
 package com.vocaciON.vocacion_service.service.impl;
 
 import com.vocaciON.vocacion_service.model.entity.ResultadoPrueba;
-import com.vocaciON.vocacion_service.repository.ExpertoRepository;
-import com.vocaciON.vocacion_service.repository.PruebaVocacionRepository;
 import com.vocaciON.vocacion_service.repository.ResultadoPruebaRepository;
-import com.vocaciON.vocacion_service.repository.UsuarioRepositoy;
 import com.vocaciON.vocacion_service.service.AdminResultadoPruebaService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

@@ -2,6 +2,7 @@ package com.vocaciON.vocacion_service.service.impl;
 
 import com.vocaciON.vocacion_service.model.entity.Perfil;
 import com.vocaciON.vocacion_service.repository.PerfilRepository;
+import com.vocaciON.vocacion_service.repository.UsuarioRepository;
 import com.vocaciON.vocacion_service.service.AdminPerfilService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import java.util.List;
 public class AdminPerfilServiceImpl implements AdminPerfilService {
 
     private final PerfilRepository perfilRepository;
+    private final UsuarioRepository usuarioRepository;
 
     @Transactional(readOnly = true)
     @Override

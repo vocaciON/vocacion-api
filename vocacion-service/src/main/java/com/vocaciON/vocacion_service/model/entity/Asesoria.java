@@ -42,6 +42,18 @@ public class Asesoria {
     @Column(name = "estado_asesoria")
     private EstadoAsesoria estadoAsesoria;
 
+    @OneToOne
+    @JoinColumn(name = "experto_id",referencedColumnName = "id",
+            foreignKey =@ForeignKey(name = "FK_asesoria_experto") )
+    private Experto experto;
+
+    @OneToOne
+    @JoinColumn(name = "perfil_id",referencedColumnName = "id",
+    foreignKey = @ForeignKey(name = "FK_asesoria_perfil"))
+    private Perfil perfil;
+
+
+
 
     public void setCreatedAt(LocalDateTime now) {
 
