@@ -24,8 +24,14 @@ public class Asesoria {
     @Column(name="tema_tratar", nullable=false)
     private String temaTratar;
 
-    @Column(name = "fecha", nullable = false)
+    @Column(name = "fecha_asesoria", nullable = false)
     private Date fechaAsesoria;
+
+    @Column(name = "fecha_create")
+    private LocalDateTime fechaCreate;
+
+    @Column(name = "fecha_update")
+    private LocalDateTime fechaUpdate;
 
     @Column(name = "link_asesoria", nullable = false)
     private String linkAsesoria;
@@ -55,7 +61,5 @@ public class Asesoria {
 
 
 
-    public void setCreatedAt(LocalDateTime now) {
 
-    }
 }

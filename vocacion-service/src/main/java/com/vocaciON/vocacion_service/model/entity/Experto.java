@@ -27,16 +27,19 @@ public class Experto {
     private String estudios;
 
     //Adaptando a la nueva diagrama de clases
-    @Column(name="edad_experto")
-    private Date edadExperto;
+
     @Column(name="especialidad")
     private String especialidad;
     @Column(name="informacion_personal")
     private String informacionPersonal;
-    @Column(name="calificacion")
-    private String calificacion;
+
     @Column(name = "disponibilidad")
-    private String disponibilidad;
+    private boolean disponibilidad;
+
+    @Column(name = "fecha_create")
+    private LocalDateTime fechaCreate;
+    @Column(name = "fecha_update")
+    private LocalDateTime fechaUpdate;
 
 
     @OneToOne

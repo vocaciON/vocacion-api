@@ -24,8 +24,10 @@ public class Pago {
     @Column(name = "monto", nullable = false)
     private Float monto;
 
-    @Column(name = "fecha", nullable = false)
-    private LocalDateTime fecha;
+    @Column(name = "fecha_create")
+    private LocalDateTime fechaCreate;
+    @Column(name = "fecha_update")
+    private LocalDateTime fechaUpdate;
 // verificando si se agregocomo clave forania , aun esta para modificar
     @ManyToOne
     @JoinColumn(name = "usuario_id", referencedColumnName = "id",

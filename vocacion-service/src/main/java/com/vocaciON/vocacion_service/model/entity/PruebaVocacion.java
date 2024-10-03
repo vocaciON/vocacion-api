@@ -25,17 +25,13 @@ public class PruebaVocacion {
     @Column(name = "descripcion")
     private String descripcion;
 
-    @Column(name = "tipo")
-    private String tipo;
-
-    @Column(name = "preguntas")
-    private String preguntas;
-
-    @Column(name = "Respuestas")
-    private String respuestas;
-
     @Column(name = "limite_tiempo")
     private Integer limiteTiempo;
+
+    @Column(name = "fecha_create")
+    private LocalDateTime fechaCreate;
+    @Column(name = "fecha_update")
+    private LocalDateTime fechaUpdate;
 
     @ManyToOne
     @JoinColumn(name = "perfil_id",referencedColumnName = "id",

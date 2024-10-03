@@ -23,14 +23,18 @@ public class Perfil {
 
     @Column(name = "descripcion")
     private String descripcion;
-    @Column(name = "edad_estudiante")
-    private int edadEstudiante;
+
     @Column(name = "grado_academico")
     private String gradoAcademico;
     @Column(name = "institucion_estudio")
     private String institucionEstudio;
     @Column(name = "carrer_interes")
     private String carrerasInteres;
+
+    @Column(name = "fecha_create")
+    private LocalDateTime fechaCreate;
+    @Column(name = "fecha_update")
+    private LocalDateTime fechaUpdate;
 
 
 
