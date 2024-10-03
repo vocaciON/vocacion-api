@@ -36,9 +36,11 @@ public class ContenidoEducativo {
     private String link;
 
     @ManyToOne
-    @JoinColumn(name = "perfil_id",referencedColumnName = "id",
-    foreignKey = @ForeignKey(name = "FK_contenidoEducativo_perfil"))
+    @JoinColumn(name = "perfil_id", referencedColumnName = "id",
+    foreignKey = @ForeignKey(name = "FK_contenido_educativo_perfil"))
     private Perfil perfil;
+
+
 
 
 }

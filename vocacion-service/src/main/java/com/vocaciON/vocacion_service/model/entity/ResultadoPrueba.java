@@ -26,16 +26,26 @@ public class ResultadoPrueba {
     @Column(name = "feedback")
     private String feedback;
 
-    /*@ManyToOne
-    @JoinColumn(name = "prueba_id", referencedColumnName = "id", nullable = false)
+
+
+    @OneToOne
+    @JoinColumn(name = "prueba_vocacion_id",referencedColumnName = "id",
+    foreignKey = @ForeignKey(name = "FK_resultado_prueba_prueba_vocacion"))
     private PruebaVocacion pruebaVocacion;
 
-    @ManyToOne
-    @JoinColumn(name = "usuario_id", referencedColumnName = "idUsuario", nullable = false)
-    private Usuario usuario;*/
+    @OneToOne
+    @JoinColumn(name = "usuario_id",referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "FK_resultado_prueba_usuario"))
+    private Usuario usuario;
 
-    @OneToOne(mappedBy = "resultadoPrueba", cascade = CascadeType.ALL)
-    private PruebaVocacion pruebaVocacion;
+    @OneToOne
+    @JoinColumn(name = "perfil_id",referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "FK_resultado_prueba_perfil"))
+    private Perfil perfil;
+    @OneToOne
+    @JoinColumn(name = "carrera_id",referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "FK_resultado_prueba_carrera"))
+    private Carrera carrera;
 
 
 

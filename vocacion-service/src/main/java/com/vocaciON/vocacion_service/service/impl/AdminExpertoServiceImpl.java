@@ -2,6 +2,7 @@ package com.vocaciON.vocacion_service.service.impl;
 // Estas clases van a contener la implementacion
 
 import com.vocaciON.vocacion_service.model.entity.Experto;
+import com.vocaciON.vocacion_service.model.entity.Usuario;
 import com.vocaciON.vocacion_service.repository.ExpertoRepository;
 import com.vocaciON.vocacion_service.repository.UsuarioRepository;
 import com.vocaciON.vocacion_service.service.AdminExpertoService;
@@ -38,7 +39,12 @@ public class AdminExpertoServiceImpl implements AdminExpertoService {
 
     @Transactional
     @Override
-    public Experto create(Experto experto) { //crear
+    public Experto create(Experto experto) {
+
+        Usuario usuario = usuarioRepository.findById(experto.getUsuario().getId())
+                .orElseThrow(() -> new RuntimeException("Usuario  no encontrado"+experto.getUsuario().getId()));
+
+        experto.setUsuario(usuario);
         experto.setCreatedAt(LocalDateTime.now());// setear la fecha de creacion
         return expertoRepository.save(experto);
     }
@@ -47,12 +53,18 @@ public class AdminExpertoServiceImpl implements AdminExpertoService {
     @Override
     public Experto update(Long id, Experto updateExperto) {//actualizar
         Experto expertoFromDB = findById(id);
+
+        Usuario usuario = usuarioRepository.findById(updateExperto.getUsuario().getId())
+                        .orElseThrow(() -> new RuntimeException("Usuario  no encontrado"+updateExperto.getUsuario().getId()));
+
         expertoFromDB.setInformacionPersonal(updateExperto.getInformacionPersonal());
         expertoFromDB.setEdadExperto(updateExperto.getEdadExperto());
         expertoFromDB.setEstudios(updateExperto.getEstudios());
         expertoFromDB.setEspecialidad(updateExperto.getEspecialidad());
         expertoFromDB.setDisponibilidad(updateExperto.getDisponibilidad());
         expertoFromDB.setCalificacion(updateExperto.getCalificacion());
+
+        expertoFromDB.setUsuario(usuario);
 
 
         return expertoRepository.save(expertoFromDB);

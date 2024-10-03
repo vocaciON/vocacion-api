@@ -2,7 +2,10 @@ package com.vocaciON.vocacion_service.service.impl;
 
 import com.vocaciON.vocacion_service.model.entity.Asesoria;
 import com.vocaciON.vocacion_service.model.entity.RespuestaUsuario;
+import com.vocaciON.vocacion_service.repository.PreguntaRepository;
+import com.vocaciON.vocacion_service.repository.RespuestaRepository;
 import com.vocaciON.vocacion_service.repository.RespuestaUsuarioRepository;
+import com.vocaciON.vocacion_service.repository.ResultadoPruebaRepository;
 import com.vocaciON.vocacion_service.service.AdminRespuestaUsuarioService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +22,9 @@ import java.util.List;
 public class AdminRespuestaUsuarioServiceImpl implements AdminRespuestaUsuarioService {
 
     private final RespuestaUsuarioRepository respuestaUsuarioRepository;
+    private final ResultadoPruebaRepository resultadoPruebaRepository;
+    private final PreguntaRepository preguntaRepository;
+    private final RespuestaRepository respuestaRepository;
 
     @Transactional(readOnly = true)
     @Override
