@@ -3,10 +3,11 @@ package com.vocaciON.vocacion_service.dto;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.Date;
-
+@Data
 public class UsuarioDTO {
 
     @NotBlank(message = "El email es obligatorio")

@@ -13,7 +13,7 @@ public interface AdminPruebaVocacionService {
 
     // Crear una prueba vocacion
 
-    PruebaVocacionDTO create(PruebaVocacionDTO pruebaVocacion);
+    PruebaVocacionDTO create(PruebaVocacionDTO pruebaVocacionDTO);
 
     //Buscar las prueba vocacionales
 
@@ -21,7 +21,7 @@ public interface AdminPruebaVocacionService {
 
     // Actualizar la prueba vocacional primero buscando el id
 
-    PruebaVocacionDTO update(Long id, PruebaVocacionDTO UpdatePruebaVocacion);
+    PruebaVocacionDTO update(Long id, PruebaVocacionDTO updatePruebaVocacionDTO);
 
     // Eliminar La prueba vocacional
 

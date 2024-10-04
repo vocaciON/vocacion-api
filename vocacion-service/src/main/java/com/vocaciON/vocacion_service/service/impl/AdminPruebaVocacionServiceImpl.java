@@ -1,8 +1,11 @@
 package com.vocaciON.vocacion_service.service.impl;
 
 
+import com.vocaciON.vocacion_service.dto.ExpertoDTO;
+import com.vocaciON.vocacion_service.dto.PruebaVocacionDTO;
 import com.vocaciON.vocacion_service.mapper.PruebaVocacionMapper;
 import com.vocaciON.vocacion_service.model.entity.ContenidoEducativo;
+import com.vocaciON.vocacion_service.model.entity.Experto;
 import com.vocaciON.vocacion_service.model.entity.Perfil;
 import com.vocaciON.vocacion_service.model.entity.PruebaVocacion;
 import com.vocaciON.vocacion_service.repository.PerfilRepository;
@@ -31,55 +34,57 @@ public class AdminPruebaVocacionServiceImpl implements AdminPruebaVocacionServic
 
     @Transactional(readOnly = true)
     @Override
-    public List<PruebaVocacion> getAll() {
+    public List<PruebaVocacionDTO> getAll() {
 
-        return pruebaVocacionRepository.findAll(); //optener toda la lista
+        List<PruebaVocacion> pruebaVocacions = pruebaVocacionRepository.findAll();
+
+        return pruebaVocacions.stream().map(pruebaVocacionMapper::toDTO).toList();
     }
 
     @Transactional
     @Override
-    public PruebaVocacion create(PruebaVocacion pruebaVocacion) {
+    public PruebaVocacionDTO create(PruebaVocacionDTO pruebaVocacionDTO) { //crear
 
-        Perfil perfil = perfilRepository.findById(pruebaVocacion.getPerfil().getId())
-                .orElseThrow(() -> new RuntimeException("Perfil no encontrado"+ pruebaVocacion.getPerfil().getId()));
+        PruebaVocacion pruebaVocacion = pruebaVocacionMapper.toEntity(pruebaVocacionDTO);
+        pruebaVocacion.setFechaCreate(LocalDateTime.now());
+        pruebaVocacion = pruebaVocacionRepository.save(pruebaVocacion);
 
-        pruebaVocacion.setPerfil(perfil);
-
-        PruebaVocacion.setCreatedAd(LocalDateTime.now()); // setear la fecha de creacion
-        return pruebaVocacionRepository.save(pruebaVocacion);
+        return pruebaVocacionMapper.toDTO(pruebaVocacion);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public PruebaVocacion findById(Long id) {
-        return pruebaVocacionRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Pruebas vocacional no encontradas"));
+    public PruebaVocacionDTO findById(Long id) { //buscar
+        PruebaVocacion pruebaVocacion = pruebaVocacionRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Prueba con el id " + id + " no existe"));
+        return pruebaVocacionMapper.toDTO(pruebaVocacion);
 
     }
     @Transactional
     @Override
-    public PruebaVocacion update(Long id, PruebaVocacion UpdatePruebaVocacion) {
-        PruebaVocacion pruebaVocacionFromDB = findById(id);
+    public PruebaVocacionDTO update(Long id, PruebaVocacionDTO updatePruebaVocacionDTO) {//actualizar
+        PruebaVocacion pruebaVocacionFromDB = pruebaVocacionRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("La prueba con el id " + id + " no existe"));
 
 
-        Perfil perfil = perfilRepository.findById(UpdatePruebaVocacion.getPerfil().getId())
-                .orElseThrow(() -> new RuntimeException("Perfil no encontrado"+ UpdatePruebaVocacion.getPerfil().getId()));
+        /*Perfil perfil = perfilRepository.findById(UpdatePruebaVocacion.getPerfil().getId())
+                .orElseThrow(() -> new RuntimeException("Perfil no encontrado"+ UpdatePruebaVocacion.getPerfil().getId()));*/
 
-        pruebaVocacionFromDB.setNombre(UpdatePruebaVocacion.getNombre());
-        pruebaVocacionFromDB.setDescripcion(UpdatePruebaVocacion.getDescripcion());
-        pruebaVocacionFromDB.setTipo(UpdatePruebaVocacion.getTipo());
-        pruebaVocacionFromDB.setLimiteTiempo(UpdatePruebaVocacion.getLimiteTiempo());
-        pruebaVocacionFromDB.setPreguntas(UpdatePruebaVocacion.getPreguntas());
-        pruebaVocacionFromDB.setRespuestas(UpdatePruebaVocacion.getRespuestas());
-        pruebaVocacionFromDB.setPerfil(perfil);
+        pruebaVocacionFromDB.setNombre(updatePruebaVocacionDTO.getNombre());
+        pruebaVocacionFromDB.setDescripcion(updatePruebaVocacionDTO.getDescripcion());
 
-        return pruebaVocacionRepository.save(pruebaVocacionFromDB);
+
+
+
+        pruebaVocacionFromDB = pruebaVocacionRepository.save(pruebaVocacionFromDB);
+        return pruebaVocacionMapper.toDTO(pruebaVocacionFromDB);
     }
 
     @Transactional
     @Override
     public void delete(Long id) {
-        PruebaVocacion pruebaVocacion = findById(id);
+        PruebaVocacion pruebaVocacion = pruebaVocacionRepository
+                .findById(id).orElseThrow(() -> new RuntimeException("Prueba con el id " + id + " no existe"));
         pruebaVocacionRepository.delete(pruebaVocacion);
 
     }
