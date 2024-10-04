@@ -1,8 +1,11 @@
 package com.vocaciON.vocacion_service.api;
 
 
+import com.vocaciON.vocacion_service.dto.AsesoriaDTO;
+import com.vocaciON.vocacion_service.dto.ExpertoDTO;
 import com.vocaciON.vocacion_service.model.entity.Experto;
 import com.vocaciON.vocacion_service.service.AdminExpertoService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,45 +29,43 @@ public class AdminExpertoController {
     //vamos con los metodos
     // Responder las listas
     @GetMapping
-    public ResponseEntity<List<Experto>>getListaExpertos(){
-        List<Experto> expertos = adminExpertoService.getAll();
-        return new ResponseEntity<List<Experto>>(expertos, HttpStatus.OK); //ok = 200
+    public ResponseEntity<List<ExpertoDTO>> getListaExperto(){
+        List<ExpertoDTO> experto = adminExpertoService.getAll();
+        return new ResponseEntity<>(experto, HttpStatus.OK); //ok = 200
     }
 
     //Metodo para obtener por medio del id
     @GetMapping("/{id}")
-    public ResponseEntity<Experto> getExpertoById(@PathVariable("id") Long id){
-        Experto experto = adminExpertoService.findById(id);
-        return new ResponseEntity<Experto>(experto, HttpStatus.OK);
+    public ResponseEntity<ExpertoDTO> getExpertoById(@PathVariable("id") Long id){
+        ExpertoDTO experto = adminExpertoService.findById(id);
+        return new ResponseEntity<>(experto, HttpStatus.OK);
     }
 
 
     //Ahora haremos el regististro, Postmappin
 
     @PostMapping
-    public ResponseEntity<Experto> createExperto(@RequestBody Experto experto){
+    public ResponseEntity<ExpertoDTO> create(@Valid @RequestBody ExpertoDTO expertoDTO){
 
-        Experto newExperto = adminExpertoService.create(experto);
-        return new ResponseEntity<Experto>(newExperto, HttpStatus.CREATED);
+        ExpertoDTO createExperto = adminExpertoService.create(expertoDTO);
+        return new ResponseEntity<>(createExperto, HttpStatus.CREATED);
 
     }
 
     //Put metodo para la actualizacion
     @PutMapping("/{id}")
-    public ResponseEntity<Experto> updateExperto(@PathVariable("id") Long id,
-                                                          @RequestBody Experto experto){
+    public ResponseEntity<ExpertoDTO> update(@PathVariable("id") Long id,@Valid@RequestBody ExpertoDTO expertoDTO){
 
-        Experto updateExperto = adminExpertoService.update(id,experto);
-        return new ResponseEntity<Experto>(updateExperto, HttpStatus.OK);
+        ExpertoDTO updateExperto = adminExpertoService.update(id,expertoDTO);
+        return new ResponseEntity<>(updateExperto, HttpStatus.OK);
 
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Experto> deleteExperto(@PathVariable("id") Long id,
-                                                          @RequestBody Experto experto){
+    public ResponseEntity<Void> delete(@PathVariable Long id){
 
         adminExpertoService.delete(id);
-        return new ResponseEntity<Experto>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
     }
 }
