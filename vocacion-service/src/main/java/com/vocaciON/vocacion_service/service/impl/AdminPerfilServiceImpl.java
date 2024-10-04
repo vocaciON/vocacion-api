@@ -1,6 +1,9 @@
 package com.vocaciON.vocacion_service.service.impl;
 
+import com.vocaciON.vocacion_service.dto.AsesoriaDTO;
+import com.vocaciON.vocacion_service.dto.PerfilDTO;
 import com.vocaciON.vocacion_service.mapper.PerfilMapper;
+import com.vocaciON.vocacion_service.model.entity.Asesoria;
 import com.vocaciON.vocacion_service.model.entity.ContenidoEducativo;
 import com.vocaciON.vocacion_service.model.entity.Perfil;
 import com.vocaciON.vocacion_service.model.entity.Usuario;
@@ -32,58 +35,64 @@ public class AdminPerfilServiceImpl implements AdminPerfilService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<Perfil> getAll() {
-        return perfilRepository.findAll();//obtener todos
-    }
-        @Transactional(readOnly = true)
-    @Override
-    public Perfil findById(Long id) { //buscar
-        return perfilRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Estudiante  no encontrado"));
+    public List<PerfilDTO> getAll() {
 
+        List<Perfil> perfiles = perfilRepository.findAll();
+
+        return perfiles.stream().map(perfilMapper::toDTO).toList();
     }
 
     @Transactional
     @Override
-    public Perfil create(Perfil perfil) { //crear
-
-        Usuario usuario = usuarioRepository.findById(perfil.getUsuario().getId())
-                .orElseThrow(() -> new RuntimeException("Usuario  no encontrado"+perfil.getUsuario().getId()));
-
-
-
-        perfil.setUsuario(usuario);
+    public PerfilDTO findById(Long id) {
+        Perfil perfil = perfilRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("El perfil con id " + id + " no existe"));
+        return perfilMapper.toDTO(perfil);
+        }
 
 
-        perfil.setCreatedAt(LocalDateTime.now());// setear la fecha de creacion
-        return perfilRepository.save(perfil);
+
+    @Transactional
+    @Override
+    public PerfilDTO create(PerfilDTO perfilDTO) { //crear
+
+        Perfil perfil = perfilMapper.toEntity(perfilDTO);
+        perfil.setFechaCreate(LocalDateTime.now());
+        perfil = perfilRepository.save(perfil);
+
+
+
+        /*perfil.setUsuario(usuario);*/
+
+
+        return perfilMapper.toDTO(perfil);
     }
 
     @Transactional
     @Override
-    public Perfil update(Long id, Perfil updatePerfil) {//actualizar
-        Perfil perfilFromDB = findById(id);
+    public PerfilDTO update(Long id, PerfilDTO updatePerfilDTO) {//actualizar
+        Perfil perfilFromDB = perfilRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("El estudiante con el id " + id + " no existe"));
 
-        Usuario usuario = usuarioRepository.findById(updatePerfil.getUsuario().getId())
-                        .orElseThrow(() -> new RuntimeException("Usuario  no encontrado"+updatePerfil.getUsuario().getId()));
+        perfilFromDB.setDescripcion(updatePerfilDTO.getDescripcion());
+        perfilFromDB.setGradoAcademico(updatePerfilDTO.getGradoAcademico());
 
-        perfilFromDB.setDescripcion(updatePerfil.getDescripcion());
-        perfilFromDB.setGradoAcademico(updatePerfil.getGradoAcademico());
-        perfilFromDB.setEdadEstudiante(updatePerfil.getEdadEstudiante());
-        perfilFromDB.setInstitucionEstudio(updatePerfil.getInstitucionEstudio());
-        perfilFromDB.setCarrerasInteres(updatePerfil.getCarrerasInteres());
+        perfilFromDB.setInstitucionEstudio(updatePerfilDTO.getInstitucionEstudio());
+        perfilFromDB.setCarrerasInteres(updatePerfilDTO.getCarrerasInteres());
 
-        perfilFromDB.setUsuario(usuario);
+        /*perfilFromDB.setUsuario(usuario);*/
 
 
 
-        return perfilRepository.save(perfilFromDB);
+        perfilFromDB = perfilRepository.save(perfilFromDB);
+        return perfilMapper.toDTO(perfilFromDB);
     }
 
     @Transactional
     @Override
     public void delete(Long id) {
-        Perfil perfil = findById(id);
+        Perfil perfil = perfilRepository
+                .findById(id).orElseThrow(() -> new RuntimeException("Asesoria con el id " + id + " no existe"));
         perfilRepository.delete(perfil);
 
     }

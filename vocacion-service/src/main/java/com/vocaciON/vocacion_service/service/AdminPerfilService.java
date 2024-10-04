@@ -10,11 +10,11 @@ public interface AdminPerfilService {
     //Obtener un listado de todos los expertos
     List<PerfilDTO> getAll();
     //Metodo de la creacion de un objeto de tipo Experto
-    PerfilDTO create(PerfilDTO perfil);
+    PerfilDTO create(PerfilDTO perfilDTO);
     //Metodo para buscar mediante ID
     PerfilDTO findById(Long id);
     //Actualiacion de la iformacion de los expertos
-    PerfilDTO update(Long id, PerfilDTO updatePerfil);
+    PerfilDTO update(Long id, PerfilDTO updatePerfilDTO);
     //Eliminacion del objeto Experto
     void delete(Long id);
 

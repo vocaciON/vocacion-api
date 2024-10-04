@@ -1,8 +1,11 @@
 package com.vocaciON.vocacion_service.api;
 
 
+import com.vocaciON.vocacion_service.dto.AsesoriaDTO;
+import com.vocaciON.vocacion_service.dto.PerfilDTO;
 import com.vocaciON.vocacion_service.model.entity.Perfil;
 import com.vocaciON.vocacion_service.service.AdminPerfilService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,45 +25,44 @@ public class AdminPerfilController {
     //vamos con los metodos
     // Responder las listas
     @GetMapping
-    public ResponseEntity<List<Perfil>> getListaPerfiles(){
-        List<Perfil> perfiles = adminPerfilService.getAll();
-        return new ResponseEntity<List<Perfil>>(perfiles, HttpStatus.OK); //ok = 200
+    public ResponseEntity<List<PerfilDTO>> getListaPerfil(){
+        List<PerfilDTO> perfiles = adminPerfilService.getAll();
+        return new ResponseEntity<>(perfiles, HttpStatus.OK); //ok = 200
     }
 
     //Metodo para obtener por medio del id
     @GetMapping("/{id}")
-    public ResponseEntity<Perfil> getPerfilById(@PathVariable("id") Long id){
-        Perfil perfil = adminPerfilService.findById(id);
-        return new ResponseEntity<Perfil>(perfil, HttpStatus.OK);
+    public ResponseEntity<PerfilDTO> getPerfilById(@PathVariable("id") Long id){
+        PerfilDTO perfil = adminPerfilService.findById(id);
+        return new ResponseEntity<>(perfil, HttpStatus.OK);
     }
 
 
     //Ahora haremos el regististro, Postmappin
 
     @PostMapping
-    public ResponseEntity<Perfil> createPerfil(@RequestBody Perfil perfil){
+    public ResponseEntity<PerfilDTO> create(@Valid @RequestBody PerfilDTO perfilDTO){
 
-        Perfil newPerfil = adminPerfilService.create(perfil);
-        return new ResponseEntity<Perfil>(newPerfil, HttpStatus.CREATED);
+        PerfilDTO createPerfil = adminPerfilService.create(perfilDTO);
+        return new ResponseEntity<>(createPerfil, HttpStatus.CREATED);
 
     }
 
     //Put metodo para la actualizacion
     @PutMapping("/{id}")
-    public ResponseEntity<Perfil> updatePerfil(@PathVariable("id") Long id,
-                                                 @RequestBody Perfil perfil){
+    public ResponseEntity<PerfilDTO> update(@PathVariable("id") Long id,@Valid@RequestBody PerfilDTO perfilDTO){
 
-        Perfil updatePerfil = adminPerfilService.update(id,perfil);
-        return new ResponseEntity<Perfil>(updatePerfil, HttpStatus.OK);
+        PerfilDTO updatePerfil = adminPerfilService.update(id,perfilDTO);
+        return new ResponseEntity<>(updatePerfil, HttpStatus.OK);
+
 
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Perfil> deletePerfil(@PathVariable("id") Long id,
-                                                 @RequestBody Perfil perfil){
+    public ResponseEntity<Void> delete(@PathVariable Long id){
 
         adminPerfilService.delete(id);
-        return new ResponseEntity<Perfil>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
     }
 
