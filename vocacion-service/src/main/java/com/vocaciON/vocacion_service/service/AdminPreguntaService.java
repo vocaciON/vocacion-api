@@ -9,11 +9,11 @@ public interface AdminPreguntaService {
     //Obtener un listado de todos los expertos
     List<PreguntaDTO> getAll();
     //Metodo de la creacion de un objeto de tipo Experto
-    PreguntaDTO create(PreguntaDTO pregunta);
+    PreguntaDTO create(PreguntaDTO preguntaDTO);
     //Metodo para buscar mediante ID
     PreguntaDTO findById(Long id);
     //Actualiacion de la iformacion de los expertos
-    PreguntaDTO update(Long id, PreguntaDTO updatePregunta);
+    PreguntaDTO update(Long id, PreguntaDTO updatePreguntaDTO);
     //Eliminacion del objeto Experto
     void delete(Long id);
 
