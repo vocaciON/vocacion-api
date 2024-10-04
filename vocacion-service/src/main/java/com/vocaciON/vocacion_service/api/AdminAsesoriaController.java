@@ -1,8 +1,10 @@
 package com.vocaciON.vocacion_service.api;
 
 
+import com.vocaciON.vocacion_service.dto.AsesoriaDTO;
 import com.vocaciON.vocacion_service.model.entity.Asesoria;
 import com.vocaciON.vocacion_service.service.AdminAsesoriaService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,45 +23,43 @@ public class AdminAsesoriaController {
     //vamos con los metodos
     // Responder las listas
     @GetMapping
-    public ResponseEntity<List<Asesoria>> getListaAsesoria(){
-        List<Asesoria> asesorias = adminAsesoriaService.getAll();
-        return new ResponseEntity<List<Asesoria>>(asesorias, HttpStatus.OK); //ok = 200
+    public ResponseEntity<List<AsesoriaDTO>> getListaAsesoria(){
+        List<AsesoriaDTO> asesorias = adminAsesoriaService.getAll();
+        return new ResponseEntity<>(asesorias, HttpStatus.OK); //ok = 200
     }
 
     //Metodo para obtener por medio del id
     @GetMapping("/{id}")
-    public ResponseEntity<Asesoria> getAsesoriaById(@PathVariable("id") Long id){
-        Asesoria asesoria = adminAsesoriaService.findById(id);
-        return new ResponseEntity<Asesoria>(asesoria, HttpStatus.OK);
+    public ResponseEntity<AsesoriaDTO> getAsesoriaById(@PathVariable("id") Long id){
+        AsesoriaDTO asesoria = adminAsesoriaService.findById(id);
+        return new ResponseEntity<>(asesoria, HttpStatus.OK);
     }
 
 
     //Ahora haremos el regististro, Postmappin
 
     @PostMapping
-    public ResponseEntity<Asesoria> createAsesoria(@RequestBody Asesoria asesoria){
+    public ResponseEntity<AsesoriaDTO> create(@Valid @RequestBody AsesoriaDTO asesoriaDTO){
 
-        Asesoria newAsesoria = adminAsesoriaService.create(asesoria);
-        return new ResponseEntity<Asesoria>(newAsesoria, HttpStatus.CREATED);
+        AsesoriaDTO createAsesoria = adminAsesoriaService.create(asesoriaDTO);
+        return new ResponseEntity<>(createAsesoria, HttpStatus.CREATED);
 
     }
 
     //Put metodo para la actualizacion
     @PutMapping("/{id}")
-    public ResponseEntity<Asesoria> updateAsesoria(@PathVariable("id") Long id,
-                                                 @RequestBody Asesoria asesoria){
+    public ResponseEntity<AsesoriaDTO> update(@PathVariable("id") Long id,@Valid@RequestBody AsesoriaDTO asesoriaDTO){
 
-        Asesoria updateAsesoria = adminAsesoriaService.update(id,asesoria);
-        return new ResponseEntity<Asesoria>(updateAsesoria, HttpStatus.OK);
+        AsesoriaDTO updateAsesoria = adminAsesoriaService.update(id,asesoriaDTO);
+        return new ResponseEntity<>(updateAsesoria, HttpStatus.OK);
 
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Asesoria> deleteAsesoria(@PathVariable("id") Long id,
-                                                 @RequestBody Asesoria asesoria){
+    public ResponseEntity<Void> delete(@PathVariable Long id){
 
         adminAsesoriaService.delete(id);
-        return new ResponseEntity<Asesoria>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
     }
 

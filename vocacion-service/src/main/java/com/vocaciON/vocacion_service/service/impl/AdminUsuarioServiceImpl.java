@@ -1,5 +1,6 @@
 package com.vocaciON.vocacion_service.service.impl;
 
+import com.vocaciON.vocacion_service.mapper.UsuarioMapper;
 import com.vocaciON.vocacion_service.model.entity.Usuario;
 import com.vocaciON.vocacion_service.repository.UsuarioRepository;
 import com.vocaciON.vocacion_service.service.AdminUsuarioService;
@@ -18,6 +19,7 @@ import java.util.List;
 public class AdminUsuarioServiceImpl implements AdminUsuarioService {
 
     private final UsuarioRepository usuarioRepository;
+    private final UsuarioMapper usuarioMapper;
 
     @Transactional
     @Override

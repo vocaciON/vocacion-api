@@ -1,18 +1,22 @@
 package com.vocaciON.vocacion_service.service;
 
+import com.vocaciON.vocacion_service.dto.AsesoriaDTO;
 import com.vocaciON.vocacion_service.model.entity.Asesoria;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 public interface AdminAsesoriaService {
     //Obtener un listado de todos los expertos
-    List<Asesoria> getAll();
+    List<AsesoriaDTO> getAll();
     //Metodo de la creacion de un objeto de tipo Experto
-    Asesoria create(Asesoria asesoria);
+    AsesoriaDTO create(AsesoriaDTO asesoriaDTO);
     //Metodo para buscar mediante ID
-    Asesoria findById(Long id);
+    AsesoriaDTO findById(Long id);
     //Actualiacion de la iformacion de los expertos
-    Asesoria update(Long id, Asesoria updateAsesoria);
+    AsesoriaDTO update(Long id, AsesoriaDTO updateAsesoriaDTO);
+
+
     //Eliminacion del objeto Experto
     void delete(Long id);
 

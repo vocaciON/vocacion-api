@@ -1,6 +1,9 @@
 package com.vocaciON.vocacion_service.service.impl;
 
+import com.vocaciON.vocacion_service.dto.ContenidoEducativoDTO;
 import com.vocaciON.vocacion_service.exception.ResourceNotFoundException;
+import com.vocaciON.vocacion_service.mapper.ContenidoEducativoMapper;
+import com.vocaciON.vocacion_service.model.entity.Asesoria;
 import com.vocaciON.vocacion_service.model.entity.ContenidoEducativo;
 import com.vocaciON.vocacion_service.model.entity.Perfil;
 import com.vocaciON.vocacion_service.repository.ContenidoEducativoRepository;
@@ -21,11 +24,16 @@ public class AdminContenidoEducativoServiceImpl implements AdminContenidoEducati
     private final ContenidoEducativoRepository contenidoEducativoRepository;
     private final PerfilRepository perfilRepository;
 
+    private final ContenidoEducativoMapper contenidoEducativoMapper;
+
 
     @Transactional(readOnly = true)
     @Override
-    public List getAll() {
-        return contenidoEducativoRepository.findAll();
+    public List<ContenidoEducativoDTO> getAll() {
+
+        List<ContenidoEducativo> contenidoEducativos = contenidoEducativoRepository.findAll();
+
+        return contenidoEducativos.stream().map(contenidoEducativoMapper::toDTO).toList();
     }
 
     @Transactional

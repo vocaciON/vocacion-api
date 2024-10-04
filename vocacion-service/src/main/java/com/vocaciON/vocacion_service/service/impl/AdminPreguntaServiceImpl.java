@@ -1,5 +1,6 @@
 package com.vocaciON.vocacion_service.service.impl;
 
+import com.vocaciON.vocacion_service.mapper.PreguntaMapper;
 import com.vocaciON.vocacion_service.model.entity.Pregunta;
 import com.vocaciON.vocacion_service.repository.PreguntaRepository;
 import com.vocaciON.vocacion_service.repository.PruebaVocacionRepository;
@@ -20,6 +21,8 @@ public class AdminPreguntaServiceImpl implements AdminPreguntaService {
 
     private final PreguntaRepository preguntaRepository;
     private final PruebaVocacionRepository pruebaVocacionRepository;
+
+    private final PreguntaMapper preguntaMapper;
 
     @Transactional(readOnly = true)
     @Override

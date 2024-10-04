@@ -1,6 +1,9 @@
 package com.vocaciON.vocacion_service.service.impl;
 
 
+import com.vocaciON.vocacion_service.dto.CarreraDTO;
+import com.vocaciON.vocacion_service.mapper.CarreraMapper;
+import com.vocaciON.vocacion_service.model.entity.Asesoria;
 import com.vocaciON.vocacion_service.model.entity.Carrera;
 import com.vocaciON.vocacion_service.repository.CarreraRepository;
 import com.vocaciON.vocacion_service.service.AdminCarreraService;
@@ -18,11 +21,17 @@ import java.util.List;
 public class AdminCarreraServiceImpl implements AdminCarreraService {
     private final CarreraRepository carreraRepository;
 
+    private final CarreraMapper carreraMapper;
+
     @Transactional(readOnly = true)
     @Override
 
-    public List<Carrera> getAll() {
-        return carreraRepository.findAll();//obtener todos
+    public List<CarreraDTO> getAll() {
+        List<Carrera> carreras = carreraRepository.findAll();
+
+        return carreras.stream().map(carreraMapper::toDTO).toList();
+
+
     }
     @Transactional(readOnly = true)
     @Override

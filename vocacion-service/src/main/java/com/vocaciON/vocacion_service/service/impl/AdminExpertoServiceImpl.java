@@ -1,6 +1,9 @@
 package com.vocaciON.vocacion_service.service.impl;
 // Estas clases van a contener la implementacion
 
+import com.vocaciON.vocacion_service.dto.ExpertoDTO;
+import com.vocaciON.vocacion_service.mapper.ExpertoMapper;
+import com.vocaciON.vocacion_service.model.entity.Asesoria;
 import com.vocaciON.vocacion_service.model.entity.Experto;
 import com.vocaciON.vocacion_service.model.entity.Usuario;
 import com.vocaciON.vocacion_service.repository.ExpertoRepository;
@@ -23,11 +26,16 @@ public class AdminExpertoServiceImpl implements AdminExpertoService {
     private final ExpertoRepository expertoRepository;
     private final UsuarioRepository usuarioRepository;
 
+    private final ExpertoMapper expertoMapper;
+
 
     @Transactional(readOnly = true)
     @Override
-    public List<Experto> getAll() {
-        return expertoRepository.findAll();//obtener todos
+    public List<ExpertoDTO> getAll() {
+
+        List<Experto> expertos = expertoRepository.findAll();
+
+        return expertos.stream().map(expertoMapper::toDTO).toList();
     }
     @Transactional(readOnly = true)
     @Override

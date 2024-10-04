@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "resultado_pruebas")
 @Data
@@ -25,6 +27,11 @@ public class ResultadoPrueba {
 
     @Column(name = "feedback")
     private String feedback;
+
+    @Column(name = "fecha_create")
+    private LocalDateTime fechaCreate;
+    @Column(name = "fecha_update")
+    private LocalDateTime fechaUpdate;
 
 
 

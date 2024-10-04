@@ -1,5 +1,6 @@
 package com.vocaciON.vocacion_service.service;
 
+import com.vocaciON.vocacion_service.dto.PagoDTO;
 import com.vocaciON.vocacion_service.model.entity.Pago;
 
 import java.util.List;
@@ -22,4 +23,5 @@ public interface AdminPagoService {
 
     //Eliminacion del objeto Experto
     void delete(Long id);
+
 }

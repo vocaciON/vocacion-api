@@ -22,6 +22,11 @@ public class Pregunta {
     @Column(name = "descripcion")
     private String descripcion;
 
+    @Column(name = "fecha_create")
+    private LocalDateTime fechaCreate;
+    @Column(name = "fecha_update")
+    private LocalDateTime fechaUpdate;
+
     @ManyToOne
     @JoinColumn(name = "prueba_vocacion_id",referencedColumnName = "id",
     foreignKey = @ForeignKey(name = "FK_pregunta_prueba_vocacion"))

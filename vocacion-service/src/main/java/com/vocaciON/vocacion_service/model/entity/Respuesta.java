@@ -23,6 +23,10 @@ public class Respuesta {
     @Column(name = "es_correcto")
     private boolean esCorrecto;
 
+    @Column(name = "fecha_create")
+    private LocalDateTime fechaCreate;
+
+
     @OneToOne
     @JoinColumn(name = "pregunta_id", referencedColumnName = "id",
     foreignKey = @ForeignKey(name = "FK_respuesta_pregunta"))

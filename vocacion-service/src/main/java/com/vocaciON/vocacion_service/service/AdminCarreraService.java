@@ -1,19 +1,21 @@
 package com.vocaciON.vocacion_service.service;
 
 import com.vocaciON.vocacion_service.model.entity.Carrera;
+import com.vocaciON.vocacion_service.dto.CarreraDTO;
 
 import java.util.List;
 
 public interface AdminCarreraService {
     //Obtener un listado de todos los expertos
-    List<Carrera> getAll();
+    List<CarreraDTO> getAll();
     //Metodo de la creacion de un objeto de tipo Experto
-    Carrera create(Carrera carrera);
+    CarreraDTO create(CarreraDTO carrera);
     //Metodo para buscar mediante ID
-    Carrera findById(Long id);
+    CarreraDTO findById(Long id);
     //Actualiacion de la iformacion de los expertos
-    Carrera update(Long id, Carrera updateCarrera);
+    CarreraDTO update(Long id, CarreraDTO updateCarrera);
     //Eliminacion del objeto Experto
     void delete(Long id);
+
 
 }

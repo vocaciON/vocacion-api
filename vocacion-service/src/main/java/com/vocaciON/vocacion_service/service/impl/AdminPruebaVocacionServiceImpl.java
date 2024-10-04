@@ -1,6 +1,7 @@
 package com.vocaciON.vocacion_service.service.impl;
 
 
+import com.vocaciON.vocacion_service.mapper.PruebaVocacionMapper;
 import com.vocaciON.vocacion_service.model.entity.ContenidoEducativo;
 import com.vocaciON.vocacion_service.model.entity.Perfil;
 import com.vocaciON.vocacion_service.model.entity.PruebaVocacion;
@@ -25,6 +26,8 @@ public class AdminPruebaVocacionServiceImpl implements AdminPruebaVocacionServic
     private final PruebaVocacionRepository pruebaVocacionRepository;
 
     private final PerfilRepository perfilRepository;
+
+    private final PruebaVocacionMapper pruebaVocacionMapper;
 
     @Transactional(readOnly = true)
     @Override

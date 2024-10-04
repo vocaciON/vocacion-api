@@ -1,19 +1,21 @@
 package com.vocaciON.vocacion_service.service;
 
+import com.vocaciON.vocacion_service.dto.RespuestaUsuarioDTO;
 import com.vocaciON.vocacion_service.model.entity.RespuestaUsuario;
 
 import java.util.List;
 
 public interface AdminRespuestaUsuarioService {
     //Obtener un listado de todos los expertos
-    List<RespuestaUsuario> getAll();
+    List<RespuestaUsuarioDTO> getAll();
     //Metodo de la creacion de un objeto de tipo Experto
-    RespuestaUsuario create(RespuestaUsuario respuestaUsuario);
+    RespuestaUsuarioDTO create(RespuestaUsuarioDTO respuestaUsuario);
     //Metodo para buscar mediante ID
-    RespuestaUsuario findById(Long id);
+    RespuestaUsuarioDTO findById(Long id);
     //Actualiacion de la iformacion de los expertos
-    RespuestaUsuario update(Long id, RespuestaUsuario updateRespuestaUsuario);
+    RespuestaUsuarioDTO update(Long id, RespuestaUsuarioDTO updateRespuestaUsuario);
     //Eliminacion del objeto Experto
     void delete(Long id);
+
 
 }

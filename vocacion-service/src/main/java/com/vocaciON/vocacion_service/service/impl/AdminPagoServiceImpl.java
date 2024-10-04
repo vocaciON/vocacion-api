@@ -1,6 +1,7 @@
 package com.vocaciON.vocacion_service.service.impl;
 
 
+import com.vocaciON.vocacion_service.mapper.PagoMapper;
 import com.vocaciON.vocacion_service.model.entity.Pago;
 import com.vocaciON.vocacion_service.model.enums.EstadoPago;
 import com.vocaciON.vocacion_service.repository.PagoRepository;
@@ -18,12 +19,14 @@ import java.util.List;
 public class AdminPagoServiceImpl implements AdminPagoService {
     private final PagoRepository pagoRepository;
 
+    private final PagoMapper pagoMapper;
+
     @Override
     @Transactional
     public Pago createPago(Pago pago) { //registro de una compra
         //Establecer una fecha de creacion
 
-        pago.setFecha(LocalDateTime.now());
+        pago.setFechaCreate(LocalDateTime.now());
         //Asignar un estado de pago
         pago.setEstadoPago(EstadoPago.PENDING);
         //Calcular el pago

@@ -1,5 +1,6 @@
 package com.vocaciON.vocacion_service.service.impl;
 
+import com.vocaciON.vocacion_service.mapper.PerfilMapper;
 import com.vocaciON.vocacion_service.model.entity.ContenidoEducativo;
 import com.vocaciON.vocacion_service.model.entity.Perfil;
 import com.vocaciON.vocacion_service.model.entity.Usuario;
@@ -25,6 +26,8 @@ public class AdminPerfilServiceImpl implements AdminPerfilService {
 
     private final PerfilRepository perfilRepository;
     private final UsuarioRepository usuarioRepository;
+
+    private final PerfilMapper perfilMapper;
 
 
     @Transactional(readOnly = true)

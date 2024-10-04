@@ -24,6 +24,11 @@ public class Carrera {
     @Column(name = "descripcion")
     private String descripcion;
 
+    @Column(name = "fecha_create")
+    private LocalDateTime fechaCreate;
+    @Column(name = "fecha_update")
+    private LocalDateTime fechaUpdate;
+
 
     public void setCreatedAt(LocalDateTime now) {
     }

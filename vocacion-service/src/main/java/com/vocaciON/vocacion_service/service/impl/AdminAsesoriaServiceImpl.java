@@ -1,9 +1,9 @@
 package com.vocaciON.vocacion_service.service.impl;
 
 
+import com.vocaciON.vocacion_service.dto.AsesoriaDTO;
+import com.vocaciON.vocacion_service.mapper.AsesoriaMapper;
 import com.vocaciON.vocacion_service.model.entity.Asesoria;
-import com.vocaciON.vocacion_service.model.entity.Experto;
-import com.vocaciON.vocacion_service.model.entity.Perfil;
 import com.vocaciON.vocacion_service.model.enums.EstadoAsesoria;
 import com.vocaciON.vocacion_service.repository.AsesoriaRepository;
 import com.vocaciON.vocacion_service.repository.ExpertoRepository;
@@ -27,70 +27,78 @@ public class AdminAsesoriaServiceImpl implements AdminAsesoriaService {
     private final ExpertoRepository expertoRepository;
     private final PerfilRepository perfilRepository;
 
+    private final AsesoriaMapper asesoriaMapper;
+
 
 
 
     @Transactional(readOnly = true)
     @Override
-    public List<Asesoria> getAll() {
-        return asesoriaRepository.findAll();//obtener todos
+    public List<AsesoriaDTO> getAll() {
+
+        List<Asesoria> asesorias = asesoriaRepository.findAll();
+
+        return asesorias.stream().map(asesoriaMapper::toDTO).toList();
     }
+
     @Transactional(readOnly = true)
     @Override
-    public Asesoria findById(Long id) { //buscar
-        return asesoriaRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Asesoria  no encontrado"));
+    public AsesoriaDTO findById(Long id) { //buscar
+        Asesoria asesoria = asesoriaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Asesoria con el id " + id + " no existe"));
+        return asesoriaMapper.toDTO(asesoria);
 
     }
 
     @Transactional
     @Override
-    public Asesoria create(Asesoria asesoria) { //crear
+    public AsesoriaDTO create(AsesoriaDTO asesoriaDTO) { //crear
 
-        Experto experto = expertoRepository.findById(asesoria.getExperto().getId())
-                .orElseThrow(() -> new RuntimeException("Experto no encontrado"+ asesoria.getExperto().getId()));
+        Asesoria asesoria = asesoriaMapper.toEntity(asesoriaDTO);
+        asesoria.setFechaCreate(LocalDateTime.now());
+        asesoria = asesoriaRepository.save(asesoria);
 
-        Perfil perfil = perfilRepository.findById(asesoria.getPerfil().getId())
-                        .orElseThrow(() -> new RuntimeException("Perfil no encontrado"+ asesoria.getPerfil().getId()));
-        //Crear el estado de la asesoria
+
         //**************************************************************
         asesoria.setEstadoAsesoria(EstadoAsesoria.PENDIENTE);
         //*************************************************************
-        asesoria.setExperto(experto);
-        asesoria.setPerfil(perfil);
-        asesoria.setCreatedAt(LocalDateTime.now());// setear la fecha de creacion
-        return asesoriaRepository.save(asesoria);
+
+
+        return asesoriaMapper.toDTO(asesoria);
     }
 
     @Transactional
     @Override
-    public Asesoria update(Long id, Asesoria updateAsesoria) {//actualizar
-        Asesoria asesoriaFromDB = findById(id);
+    public AsesoriaDTO update(Long id, AsesoriaDTO updateAsesoriaDTO) {//actualizar
+        Asesoria asesoriaFromDB = asesoriaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("La asesoria con el id " + id + " no existe"));
 
-        Experto experto = expertoRepository.findById(updateAsesoria.getExperto().getId())
+        /**Experto experto = expertoRepository.findById(updateAsesoria.getExperto().getId())
                         .orElseThrow(() -> new RuntimeException("Experto no encontrado"+ updateAsesoria.getExperto().getId()));
         Perfil perfil = perfilRepository.findById(updateAsesoria.getPerfil().getId())
-                        .orElseThrow(() -> new RuntimeException("Perfil no encontrado"+ updateAsesoria.getPerfil().getId()));
+                        .orElseThrow(() -> new RuntimeException("Perfil no encontrado"+ updateAsesoria.getPerfil().getId()));**/
 
-        asesoriaFromDB.setTemaTratar(updateAsesoria.getTemaTratar());
-        asesoriaFromDB.setFechaAsesoria(updateAsesoria.getFechaAsesoria());
-        asesoriaFromDB.setCosto(updateAsesoria.getCosto());
-        asesoriaFromDB.setCreatedAt(LocalDateTime.now());
-        asesoriaFromDB.setLinkAsesoria(updateAsesoria.getLinkAsesoria());
+        asesoriaFromDB.setTemaTratar(updateAsesoriaDTO.getTemaTratar());
+        asesoriaFromDB.setFechaAsesoria(updateAsesoriaDTO.getFechaAsesoria());
 
-        asesoriaFromDB.setExperto(experto);
-        asesoriaFromDB.setPerfil(perfil);
+        asesoriaFromDB.setFechaCreate(LocalDateTime.now());
+        asesoriaFromDB.setFechaUpdate(LocalDateTime.now());
+        asesoriaFromDB.setLinkAsesoria(updateAsesoriaDTO.getLinkAsesoria());
+
+        /**asesoriaFromDB.setExperto(experto);
+        asesoriaFromDB.setPerfil(perfil);**/
 
 
 
-
-        return asesoriaRepository.save(asesoriaFromDB);
+        asesoriaFromDB = asesoriaRepository.save(asesoriaFromDB);
+        return asesoriaMapper.toDTO(asesoriaFromDB);
     }
 
     @Transactional
     @Override
     public void delete(Long id) {
-        Asesoria asesoria = findById(id);
+        Asesoria asesoria = asesoriaRepository
+                .findById(id).orElseThrow(() -> new RuntimeException("Asesoria con el id " + id + " no existe"));
         asesoriaRepository.delete(asesoria);
 
     }
