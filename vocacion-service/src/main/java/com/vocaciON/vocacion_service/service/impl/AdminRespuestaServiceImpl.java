@@ -1,6 +1,9 @@
 package com.vocaciON.vocacion_service.service.impl;
 
+import com.vocaciON.vocacion_service.dto.AsesoriaDTO;
+import com.vocaciON.vocacion_service.dto.RespuestaDTO;
 import com.vocaciON.vocacion_service.mapper.RespuestaMapper;
+import com.vocaciON.vocacion_service.model.entity.Asesoria;
 import com.vocaciON.vocacion_service.model.entity.Pregunta;
 import com.vocaciON.vocacion_service.model.entity.Respuesta;
 import com.vocaciON.vocacion_service.repository.PreguntaRepository;
@@ -30,52 +33,54 @@ public class AdminRespuestaServiceImpl implements AdminRespuestaService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<Respuesta> getAll() {
+    public List<RespuestaDTO> getAll() {
 
-        return respuestaRepository.findAll();//obtener todos
+        List<Respuesta> respuestas = respuestaRepository.findAll();
+
+        return respuestas.stream().map(respuestaMapper::toDTO).toList();
     }
     @Transactional(readOnly = true)
     @Override
-    public Respuesta findById(Long id) { //buscar
-        return respuestaRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Respuesta no encontrado"));
+    public RespuestaDTO findById(Long id) { //buscar
+        Respuesta respuesta = respuestaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Respuesta con el id " + id + " no existe"));
+        return respuestaMapper.toDTO(respuesta);
 
     }
 
     @Transactional
     @Override
-    public Respuesta create(Respuesta respuesta) { //crear
+    public RespuestaDTO create(RespuestaDTO respuestaDTO) { //crear
 
-        Pregunta pregunta = preguntaRepository.findById(respuesta.getPregunta().getId())
-                .orElseThrow(() -> new RuntimeException("Pregunta no encontrado"+respuesta.getPregunta().getId()));
+        Respuesta respuesta = respuestaMapper.toEntity(respuestaDTO);
+        respuesta.setFechaCreate(LocalDateTime.now());
+        respuesta = respuestaRepository.save(respuesta);
 
-        respuesta.setCreatedAt(LocalDateTime.now());// setear la fecha de creacion
-        respuesta.setPregunta(pregunta);
-        return respuestaRepository.save(respuesta);
+        return respuestaMapper.toDTO(respuesta);
     }
 
     @Transactional
     @Override
-    public Respuesta update(Long id, Respuesta updateRespuesta) {//actualizar
-        Respuesta respuestaFromDB = findById(id);
-        Pregunta pregunta = preguntaRepository.findById(updateRespuesta.getPregunta().getId())
-                .orElseThrow(() -> new RuntimeException("Pregunta no encontrado"+updateRespuesta.getPregunta().getId()));
+    public RespuestaDTO update(Long id, RespuestaDTO updateRespuestaDTO) {//actualizar
+        Respuesta respuestaFromDB = respuestaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("La Respuesta con el id " + id + " no existe"));
 
 
 
-        respuestaFromDB.setPregunta(pregunta);
+        respuestaFromDB.setDescripcion(updateRespuestaDTO.getDescripcion());
 
 
+        respuestaFromDB = respuestaRepository.save(respuestaFromDB);
+        return respuestaMapper.toDTO(respuestaFromDB);
 
 
-
-        return respuestaRepository.save(respuestaFromDB);
     }
 
     @Transactional
     @Override
     public void delete(Long id) {
-        Respuesta respuesta = findById(id);
+        Respuesta respuesta = respuestaRepository
+                .findById(id).orElseThrow(() -> new RuntimeException("Respuesta con el id " + id + " no existe"));
         respuestaRepository.delete(respuesta);
 
     }

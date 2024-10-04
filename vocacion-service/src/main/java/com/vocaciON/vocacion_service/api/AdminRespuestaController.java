@@ -1,7 +1,10 @@
 package com.vocaciON.vocacion_service.api;
 
+import com.vocaciON.vocacion_service.dto.RespuestaDTO;
 import com.vocaciON.vocacion_service.model.entity.Respuesta;
+import com.vocaciON.vocacion_service.repository.RespuestaRepository;
 import com.vocaciON.vocacion_service.service.AdminRespuestaService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,50 +19,41 @@ import java.util.List;
 public class AdminRespuestaController {
 
     private final AdminRespuestaService adminRespuestaService;
+    private final RespuestaRepository respuestaRepository;
 
     //vamos con los metodos
     // Responder las listas
 
     @GetMapping
-    public ResponseEntity<List<Respuesta>> getListaRespuesta(){
-        List<Respuesta> respuestas = adminRespuestaService.getAll();
-        return new ResponseEntity<List<Respuesta>>(respuestas, HttpStatus.OK); //ok = 200
+    public ResponseEntity<List<RespuestaDTO>> getListaRespuesta() {
+        List<RespuestaDTO> respuestas = adminRespuestaService.getAll();
+        return new ResponseEntity<>(respuestas, HttpStatus.OK); //ok = 200
     }
+
 
     //Metodo para obtener por medio del id
     @GetMapping("/{id}")
-    public ResponseEntity<Respuesta> getRespuestaById(@PathVariable("id") Long id){
-        Respuesta respuesta = adminRespuestaService.findById(id);
-        return new ResponseEntity<Respuesta>(respuesta, HttpStatus.OK);
+    public ResponseEntity<RespuestaDTO> getRespuestaById(@PathVariable("id") Long id) {
+        RespuestaDTO respuesta = adminRespuestaService.findById(id);
+        return new ResponseEntity<>(respuesta, HttpStatus.OK);
     }
 
 
     //Ahora haremos el regististro, Postmappin
 
     @PostMapping
-    public ResponseEntity<Respuesta> createRespuesta(@RequestBody Respuesta respuesta){
+    public ResponseEntity<RespuestaDTO> create(@Valid @RequestBody RespuestaDTO respuestaDTO) {
 
-        Respuesta newRespuesta = adminRespuestaService.create(respuesta);
-        return new ResponseEntity<Respuesta>(newRespuesta, HttpStatus.CREATED);
+        RespuestaDTO createRespuesta = adminRespuestaService.create(respuestaDTO);
+        return new ResponseEntity<>(createRespuesta, HttpStatus.CREATED);
 
     }
 
     //Put metodo para la actualizacion
     @PutMapping("/{id}")
-    public ResponseEntity<Respuesta> updateRespuesta(@PathVariable("id") Long id,
-                                                   @RequestBody Respuesta respuesta){
+    public ResponseEntity<RespuestaDTO> update(@PathVariable("id") Long id, @Valid @RequestBody RespuestaDTO respuestaDTO) {
 
-        Respuesta updateRespuesta = adminRespuestaService.update(id,respuesta);
-        return new ResponseEntity<Respuesta>(updateRespuesta, HttpStatus.OK);
-
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Respuesta> deleteRespuesta(@PathVariable("id") Long id,
-                                                   @RequestBody Respuesta respuesta){
-
-        adminRespuestaService.delete(id);
-        return new ResponseEntity<Respuesta>(HttpStatus.NO_CONTENT);
-
+        RespuestaDTO updateRespuesta = adminRespuestaService.update(id, respuestaDTO);
+        return new ResponseEntity<>(updateRespuesta, HttpStatus.OK);
     }
 }
