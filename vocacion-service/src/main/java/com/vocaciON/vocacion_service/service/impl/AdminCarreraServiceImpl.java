@@ -2,9 +2,11 @@ package com.vocaciON.vocacion_service.service.impl;
 
 
 import com.vocaciON.vocacion_service.dto.CarreraDTO;
+import com.vocaciON.vocacion_service.mapper.AsesoriaMapper;
 import com.vocaciON.vocacion_service.mapper.CarreraMapper;
 import com.vocaciON.vocacion_service.model.entity.Asesoria;
 import com.vocaciON.vocacion_service.model.entity.Carrera;
+import com.vocaciON.vocacion_service.repository.AsesoriaRepository;
 import com.vocaciON.vocacion_service.repository.CarreraRepository;
 import com.vocaciON.vocacion_service.service.AdminCarreraService;
 import lombok.Data;
@@ -22,6 +24,8 @@ public class AdminCarreraServiceImpl implements AdminCarreraService {
     private final CarreraRepository carreraRepository;
 
     private final CarreraMapper carreraMapper;
+    private final AsesoriaMapper asesoriaMapper;
+    private final AsesoriaRepository asesoriaRepository;
 
     @Transactional(readOnly = true)
     @Override
@@ -35,37 +39,44 @@ public class AdminCarreraServiceImpl implements AdminCarreraService {
     }
     @Transactional(readOnly = true)
     @Override
-    public Carrera findById(Long id) { //buscar
-        return carreraRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Carrera  no encontrado"));
+    public CarreraDTO findById(Long id) { //buscar
+        Carrera carrera = carreraRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Carrera con el id " + id + " no existe"));
+        return carreraMapper.toDTO(carrera);
 
     }
 
     @Transactional
     @Override
-    public Carrera create(Carrera carrera) { //crear
-        carrera.setCreatedAt(LocalDateTime.now());// setear la fecha de creacion
-        return carreraRepository.save(carrera);
+    public CarreraDTO create(CarreraDTO carreraDTO) { //crear
+        Carrera carrera = carreraMapper.toEntity(carreraDTO);
+        carrera.setFechaCreate(LocalDateTime.now());
+        carrera = carreraRepository.save(carrera);
+
+        return carreraMapper.toDTO(carrera);
     }
 
     @Transactional
     @Override
-    public Carrera update(Long id, Carrera updateCarrera) {//actualizar
-        Carrera carreraFromDB = findById(id);
+    public CarreraDTO update(Long id, CarreraDTO updateCarreraDTO) {//actualizar
+        Carrera carreraFromDB = carreraRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("La carrera con el id " + id + " no existe"));
 
-        carreraFromDB.setNombre(updateCarrera.getNombre());
-        carreraFromDB.setDescripcion(updateCarrera.getDescripcion());
+        carreraFromDB.setNombre(updateCarreraDTO.getNombre());
+        carreraFromDB.setDescripcion(updateCarreraDTO.getDescripcion());
 
 
 
 
-        return carreraRepository.save(carreraFromDB);
+        carreraFromDB = carreraRepository.save(carreraFromDB);
+        return carreraMapper.toDTO(carreraFromDB);
     }
 
     @Transactional
     @Override
     public void delete(Long id) {
-        Carrera carrera = findById(id);
+        Carrera carrera = carreraRepository
+                .findById(id).orElseThrow(() -> new RuntimeException("Carrera con el id " + id + " no existe"));
         carreraRepository.delete(carrera);
 
     }
