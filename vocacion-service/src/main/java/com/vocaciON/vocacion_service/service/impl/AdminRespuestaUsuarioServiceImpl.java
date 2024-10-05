@@ -1,5 +1,7 @@
 package com.vocaciON.vocacion_service.service.impl;
 
+import com.vocaciON.vocacion_service.dto.AsesoriaDTO;
+import com.vocaciON.vocacion_service.dto.RespuestaUsuarioDTO;
 import com.vocaciON.vocacion_service.mapper.RespuestaUsuarioMapper;
 import com.vocaciON.vocacion_service.model.entity.Asesoria;
 import com.vocaciON.vocacion_service.model.entity.RespuestaUsuario;
@@ -31,28 +33,41 @@ public class AdminRespuestaUsuarioServiceImpl implements AdminRespuestaUsuarioSe
 
     @Transactional(readOnly = true)
     @Override
-        public List<RespuestaUsuario> getAll() {
-        return respuestaUsuarioRepository.findAll();//obtener todos
+    public List<RespuestaUsuarioDTO> getAll() {
+
+        List<RespuestaUsuario> respuestaUsuarios = respuestaUsuarioRepository.findAll();
+
+        return respuestaUsuarios.stream().map(respuestaUsuarioMapper::toDTO).toList();
     }
+
+
     @Transactional(readOnly = true)
     @Override
-    public RespuestaUsuario findById(Long id) { //buscar
-        return respuestaUsuarioRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Respuesta Usuario  no encontrado"));
+    public RespuestaUsuarioDTO findById(Long id) { //buscar
+        RespuestaUsuario respuestaUsuario = respuestaUsuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Respuestas de Usuario con el id " + id + " no existe"));
+        return respuestaUsuarioMapper.toDTO(respuestaUsuario);
 
     }
 
     @Transactional
     @Override
-    public RespuestaUsuario create(RespuestaUsuario respuestaUsuario) { //crear
-        respuestaUsuario.setCreatedAt(LocalDateTime.now());// setear la fecha de creacion
-        return respuestaUsuarioRepository.save(respuestaUsuario);
+    public RespuestaUsuarioDTO create(RespuestaUsuarioDTO respuestaUsuarioDTO) { //crear
+
+        RespuestaUsuario respuestaUsuario = respuestaUsuarioMapper.toEntity(respuestaUsuarioDTO);
+        respuestaUsuario.setFechaCreate(LocalDateTime.now());
+        respuestaUsuario = respuestaUsuarioRepository.save(respuestaUsuario);
+
+        return respuestaUsuarioMapper.toDTO(respuestaUsuario);
+
+
     }
 
     @Transactional
     @Override
-    public RespuestaUsuario update(Long id, RespuestaUsuario updateRespuestaUsuario) {//actualizar
-        RespuestaUsuario respuestaUsuarioFromDB = findById(id);
+    public RespuestaUsuarioDTO update(Long id, RespuestaUsuarioDTO updateRespuestaUsuarioDTO) {//actualizar
+        RespuestaUsuario respuestaUsuarioFromDB = respuestaUsuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("La Respuesta de usuario con el id " + id + " no existe"));
 
 
 
@@ -61,13 +76,15 @@ public class AdminRespuestaUsuarioServiceImpl implements AdminRespuestaUsuarioSe
 
 
 
-        return respuestaUsuarioRepository.save(respuestaUsuarioFromDB);
+        respuestaUsuarioFromDB = respuestaUsuarioRepository.save(respuestaUsuarioFromDB);
+        return respuestaUsuarioMapper.toDTO(respuestaUsuarioFromDB);
     }
 
     @Transactional
     @Override
     public void delete(Long id) {
-        RespuestaUsuario respuestaUsuario = findById(id);
+        RespuestaUsuario respuestaUsuario = respuestaUsuarioRepository
+                .findById(id).orElseThrow(() -> new RuntimeException("Asesoria con el id " + id + " no existe"));
         respuestaUsuarioRepository.delete(respuestaUsuario);
 
     }

@@ -30,6 +30,11 @@ public class RespuestaUsuario {
     @JoinColumn(name = "respuesta_id",referencedColumnName = "id",
     foreignKey = @ForeignKey(name = "FK_respuesta_usuario_respuesta"))
     private Respuesta respuesta;
+    @Column(name = "fecha_create")
+    private LocalDateTime fechaCreate;
+
+    @Column(name = "fecha_update")
+    private LocalDateTime fechaUpdate;
 
     public void setCreatedAt(LocalDateTime now) {
 
