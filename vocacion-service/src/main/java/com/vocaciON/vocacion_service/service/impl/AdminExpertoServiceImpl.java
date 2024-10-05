@@ -1,9 +1,14 @@
 package com.vocaciON.vocacion_service.service.impl;
 // Estas clases van a contener la implementacion
 
-import com.vocaciON.vocacion_service.exception.ResourceNotFoundException;
+import com.vocaciON.vocacion_service.dto.AsesoriaDTO;
+import com.vocaciON.vocacion_service.dto.ExpertoDTO;
+import com.vocaciON.vocacion_service.mapper.ExpertoMapper;
+import com.vocaciON.vocacion_service.model.entity.Asesoria;
 import com.vocaciON.vocacion_service.model.entity.Experto;
+import com.vocaciON.vocacion_service.model.entity.Usuario;
 import com.vocaciON.vocacion_service.repository.ExpertoRepository;
+import com.vocaciON.vocacion_service.repository.UsuarioRepository;
 import com.vocaciON.vocacion_service.service.AdminExpertoService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -20,46 +25,66 @@ import java.util.List;
 public class AdminExpertoServiceImpl implements AdminExpertoService {
 
     private final ExpertoRepository expertoRepository;
+    private final UsuarioRepository usuarioRepository;
+
+    private final ExpertoMapper expertoMapper;
 
 
     @Transactional(readOnly = true)
     @Override
-    public List<Experto> getAll() {
-        return expertoRepository.findAll();//obtener todos
+    public List<ExpertoDTO> getAll() {
+
+        List<Experto> expertos = expertoRepository.findAll();
+
+        return expertos.stream().map(expertoMapper::toDTO).toList();
     }
     @Transactional(readOnly = true)
     @Override
-    public Experto findById(Long id) { //buscar
-        return expertoRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Experto  no encontrado"));
+    public ExpertoDTO findById(Long id) { //buscar
+        Experto experto = expertoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Experto con el id " + id + " no existe"));
+        return expertoMapper.toDTO(experto);
 
     }
 
     @Transactional
     @Override
-    public Experto create(Experto experto) { //crear
-        experto.setCreatedAt(LocalDateTime.now());// setear la fecha de creacion
-        return expertoRepository.save(experto);
+    public ExpertoDTO create(ExpertoDTO expertoDTO) { //crear
+
+        Experto experto = expertoMapper.toEntity(expertoDTO);
+        experto.setFechaCreate(LocalDateTime.now());
+        experto = expertoRepository.save(experto);
+
+        return expertoMapper.toDTO(experto);
     }
 
     @Transactional
     @Override
-    public Experto update(Long id, Experto updateExperto) {//actualizar
-        Experto expertoFromDB = findById(id);
-        expertoFromDB.setNombre(updateExperto.getNombre());
-        expertoFromDB.setApellido(updateExperto.getApellido());
-        expertoFromDB.setArea(updateExperto.getArea());
-        expertoFromDB.setDescripcion(updateExperto.getDescripcion());
-        expertoFromDB.setDisponibilidad(updateExperto.getDisponibilidad());
+    public ExpertoDTO update(Long id, ExpertoDTO updateExpertoDTO) {//actualizar
+        Experto expertoFromDB = expertoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("El Experto con el id " + id + " no existe"));
+
+        /*Usuario usuario = usuarioRepository.findById(updateExperto.getUsuario().getId())
+                        .orElseThrow(() -> new RuntimeException("Usuario  no encontrado"+updateExperto.getUsuario().getId()));*/
+
+        expertoFromDB.setInformacionPersonal(updateExpertoDTO.getInformacionPersonal());
+
+        expertoFromDB.setEstudios(updateExpertoDTO.getEstudios());
+        expertoFromDB.setEspecialidad(updateExpertoDTO.getEspecialidad());
 
 
-        return expertoRepository.save(expertoFromDB);
+
+        /*expertoFromDB.setUsuario(usuario);*/
+
+        expertoFromDB = expertoRepository.save(expertoFromDB);
+        return expertoMapper.toDTO(expertoFromDB);
     }
 
     @Transactional
     @Override
     public void delete(Long id) {
-        Experto experto = findById(id);
+        Experto experto = expertoRepository
+                .findById(id).orElseThrow(() -> new RuntimeException("Experto con el id " + id + " no existe"));
         expertoRepository.delete(experto);
 
     }

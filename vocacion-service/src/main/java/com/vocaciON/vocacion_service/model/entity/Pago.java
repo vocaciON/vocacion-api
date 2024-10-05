@@ -22,13 +22,16 @@ public class Pago {
     private Long id;
 
     @Column(name = "monto", nullable = false)
-    private BigDecimal monto;
+    private Float monto;
 
-    @Column(name = "fecha", nullable = false)
-    private LocalDateTime fecha;
+    @Column(name = "fecha_create")
+    private LocalDateTime fechaCreate;
+    @Column(name = "fecha_update")
+    private LocalDateTime fechaUpdate;
 // verificando si se agregocomo clave forania , aun esta para modificar
     @ManyToOne
-    @JoinColumn(name = "usuario_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "usuario_id", referencedColumnName = "id",
+    foreignKey = @ForeignKey(name = "FK_pago_usuario"))
     private Usuario usuario;
 
     @Enumerated(EnumType.STRING)

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -13,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 
 @Entity
-@Table(name = "Expertos")
+@Table(name = "expertos")
 
 
 public class Experto {
@@ -21,24 +22,39 @@ public class Experto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nombre", nullable = false)
-    private String nombre;
 
-    @Column(name = "apellido", nullable = false)
-    private String apellido;
+    @Column(name = "estudios", nullable = false)
+    private String estudios;
 
-    @Column(name = "area", nullable = false)
-    private String area;
+    //Adaptando a la nueva diagrama de clases
 
-    @Column(name = "descripcion")
-    private String descripcion;
+    @Column(name="especialidad")
+    private String especialidad;
+    @Column(name="informacion_personal")
+    private String informacionPersonal;
 
     @Column(name = "disponibilidad")
-    private String disponibilidad;
+    private boolean disponibilidad;
+
+    @Column(name = "fecha_create")
+    private LocalDateTime fechaCreate;
+    @Column(name = "fecha_update")
+    private LocalDateTime fechaUpdate;
 
 
-    @OneToMany(mappedBy = "experto", cascade = CascadeType.ALL)
-    private List<Asesoria> asesoria;
+    @OneToOne
+    @JoinColumn(name = "usuario_id", referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "FK_experto_usuario"))
+        private Usuario usuario;
+
+
+
+
+
+
+
+
+
 
     public void setCreatedAt(LocalDateTime now) {
     }
