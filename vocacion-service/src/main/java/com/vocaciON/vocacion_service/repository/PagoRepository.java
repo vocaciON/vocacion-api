@@ -1,4 +1,7 @@
 package com.vocaciON.vocacion_service.repository;
 
-public interface PagoRepository {
+import com.vocaciON.vocacion_service.model.entity.Pago;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface PagoRepository extends JpaRepository<Pago, Long> {
 }

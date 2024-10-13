@@ -30,7 +30,7 @@ public class Experto {
     @Column(name = "area", nullable = false)
     private String area;
 
-    @Column(name = "descripcion")
+    @Column(name = "descripcion", columnDefinition = "TEXT")
     private String descripcion;
 
     @Column(name = "disponibilidad")
