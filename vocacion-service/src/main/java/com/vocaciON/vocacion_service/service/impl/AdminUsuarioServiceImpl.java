@@ -1,11 +1,22 @@
 package com.vocaciON.vocacion_service.service.impl;
 
+import com.vocaciON.vocacion_service.dto.UsuarioProfileDTO;
+import com.vocaciON.vocacion_service.dto.UsuarioRegistrationDTO;
+import com.vocaciON.vocacion_service.exception.ResourceNotFoundException;
 import com.vocaciON.vocacion_service.mapper.UsuarioMapper;
+import com.vocaciON.vocacion_service.model.entity.Experto;
+import com.vocaciON.vocacion_service.model.entity.Perfil;
+import com.vocaciON.vocacion_service.model.entity.Role;
 import com.vocaciON.vocacion_service.model.entity.Usuario;
+import com.vocaciON.vocacion_service.model.enums.ERole;
+import com.vocaciON.vocacion_service.repository.ExpertoRepository;
+import com.vocaciON.vocacion_service.repository.PerfilRepository;
+import com.vocaciON.vocacion_service.repository.RoleRepository;
 import com.vocaciON.vocacion_service.repository.UsuarioRepository;
 import com.vocaciON.vocacion_service.service.AdminUsuarioService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,59 +30,122 @@ import java.util.List;
 public class AdminUsuarioServiceImpl implements AdminUsuarioService {
 
     private final UsuarioRepository usuarioRepository;
+    private final PerfilRepository perfilRepository;
+    private final ExpertoRepository expertoRepository;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
+
     private final UsuarioMapper usuarioMapper;
-
-    @Transactional
     @Override
-    public Usuario registrarUsuario(Usuario usuario) {
-        if(usuarioRepository.existsByEmail(usuario.getEmail())) {
-            throw new RuntimeException("El email ya existe");
+    public UsuarioProfileDTO registerPerfil(UsuarioRegistrationDTO usuarioRegistrationDTO) {
+        return registerUsuarioWithRole(usuarioRegistrationDTO, ERole.USER);
+    }
+
+    @Override
+    public UsuarioProfileDTO registerExperto(UsuarioRegistrationDTO usuarioRegistrationDTO) {
+        return registerUsuarioWithRole(usuarioRegistrationDTO, ERole.EXPERTO);
+    }
+
+    @Override
+    public UsuarioProfileDTO updateUsuarioProfile(Long id, UsuarioProfileDTO usuarioProfileDTO) {
+        // Obtener el usuario existente de la base de datos
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario con id " + id + " no encontrado"));
+
+        //Verifica si existe algun usuario con el mismo nombre apellido y numero celular
+        boolean existsAsUsuario = usuarioRepository.existsByNombreAndApellidoAndTelefonoAndIdNot(usuarioProfileDTO.getNombre(), usuarioProfileDTO.getApellido(), usuarioProfileDTO.getTelefono(), usuario.getId());
+
+        if (existsAsUsuario) {
+            throw new ResourceNotFoundException("Ya existe un usuario con el mismo nombre, apellido y telefono");
         }
-        usuario.setFechaCreate(LocalDateTime.now());
-        return usuarioRepository.save(usuario);
+
+        if(usuario.getNombre()!= null){
+            usuario.setNombre(usuarioProfileDTO.getNombre());
+        }
+        if(usuario.getApellido()!= null){
+            usuario.setApellido(usuarioProfileDTO.getApellido());
+        }
+        if(usuario.getTelefono()!= null){
+            usuario.setTelefono(usuarioProfileDTO.getTelefono());
+        }
+
+        if(usuario.getExperto()!= null){
+            usuario.getExperto().setInformacionPersonal(usuarioProfileDTO.getInformacionPersonal());
+            usuario.getExperto().setEspecialidad(usuarioProfileDTO.getEspecialidad());
+        }
+        if (usuario.getPerfil() != null) {
+            usuario.getPerfil().setGradoAcademico(usuarioProfileDTO.getGradoAcademico());
+            usuario.getPerfil().setDescripcion(usuarioProfileDTO.getDescripcion());
+        }
+        Usuario updatedUsuario = usuarioRepository.save(usuario);
+        return usuarioMapper.toUsuarioProfileDTO(updatedUsuario);
+
     }
 
-    @Transactional(readOnly = true)
+
     @Override
-    public List<Usuario> getAll() {
-        return usuarioRepository.findAll(); // Obtener toda la lista
+    public UsuarioProfileDTO getUsuarioProfileById(Long id) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("Usuario con id"+id+" no encontrado"));
+        // Mapea el usuario a un DTO de perfil
+        UsuarioProfileDTO usuarioProfileDTO = usuarioMapper.toUsuarioProfileDTO(usuario);
+
+        // Si el usuario no tiene ni perfil ni experto, usuarioProfileDTO podría estar vacío
+        if (usuarioProfileDTO.getEspecialidad() == null && usuarioProfileDTO.getGradoAcademico() == null) {
+            return null;
+        }
+
+        return usuarioProfileDTO;
     }
 
-    @Transactional
-    @Override
-    public Usuario create(Usuario usuario) {
-        return usuarioRepository.save(usuario);
-    }
+    private UsuarioProfileDTO registerUsuarioWithRole(UsuarioRegistrationDTO usuarioRegistrationDTO, ERole roleEnum) {
+        //vereficar el email
+        boolean existsByEmail = usuarioRepository.existsByEmail(usuarioRegistrationDTO.getEmail());
+        //verifica nombre apellido y telefono
+        boolean existsAsUsuario = usuarioRepository
+                .existsByNombreAndApellidoAndTelefono
+                        (usuarioRegistrationDTO.getNombre()
+                                , usuarioRegistrationDTO.getApellido()
+                                , usuarioRegistrationDTO.getTelefono());
 
-    @Transactional(readOnly = true)
-    @Override
-    public Usuario findById(Long id) {
-        return usuarioRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Usuario no encontrado"));
-    }
+        if (existsByEmail) {
+            throw new IllegalArgumentException("El email ya existe");
+        }
+        if (existsAsUsuario) {
+            throw new IllegalArgumentException("El usuario ya existe");
+        }
 
-    @Transactional
-    @Override
-    public Usuario update(Long id, Usuario usuarioUpdate) {
-        Usuario usuarioFromDB = findById(id);
-        usuarioFromDB.setNombre(usuarioUpdate.getNombre());
-        usuarioFromDB.setApellido(usuarioUpdate.getApellido());
-        usuarioFromDB.setTelefono(usuarioUpdate.getTelefono());
-        usuarioFromDB.setPassword(usuarioUpdate.getPassword());
-        usuarioFromDB.setEmail(usuarioUpdate.getEmail());
-        usuarioFromDB.setRole(usuarioUpdate.getRole());
-        usuarioFromDB.setFechaNacimiento(usuarioUpdate.getFechaNacimiento());
-        usuarioFromDB.setFechaUpdate(usuarioUpdate.getFechaUpdate());
-        usuarioFromDB.setFechaCreate(usuarioUpdate.getFechaCreate());
+        // si en caso no cumple procedo a llamar al rol enum
+        Role role = roleRepository.findByName(roleEnum)
+                .orElseThrow(() -> new IllegalArgumentException("No existe el role"));
 
+        //Cifrar la contaseña
+        usuarioRegistrationDTO.setPassword(passwordEncoder.encode(usuarioRegistrationDTO.getPassword()));
 
-        return usuarioRepository.save(usuarioFromDB);
-    }
-    @Transactional
-    @Override
-    public void delete(Long id) {
-        Usuario usuario = findById(id);
-        usuarioRepository.delete(usuario);
+        //Crear el objeto usuario
+        Usuario usuario = usuarioMapper.toUsuarioEntity(usuarioRegistrationDTO);
+        usuario.setRole(role);
 
+        if (roleEnum == ERole.USER) {
+            Perfil perfil = new Perfil();
+            perfil.setGradoAcademico(usuarioRegistrationDTO.getGradoAcademico());
+            perfil.setDescripcion(usuarioRegistrationDTO.getDescripcion());
+            perfil.setFechaCreate(LocalDateTime.now());
+
+            perfil.setUsuario(usuario);
+            usuario.setPerfil(perfil);
+
+        } else if (roleEnum == ERole.EXPERTO) {
+            Experto experto = new Experto();
+            experto.setEspecialidad(usuarioRegistrationDTO.getEspecialidad());
+            experto.setInformacionPersonal(usuarioRegistrationDTO.getInformacionPersonal());
+            experto.setFechaCreate(LocalDateTime.now());
+
+            experto.setUsuario(usuario);
+            usuario.setExperto(experto);
+
+        }
+        Usuario savedUsuario = usuarioRepository.save(usuario);
+        return usuarioMapper.toUsuarioProfileDTO(savedUsuario);
     }
 }

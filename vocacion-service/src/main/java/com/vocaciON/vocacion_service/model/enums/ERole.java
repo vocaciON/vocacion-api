@@ -1,6 +1,6 @@
 package com.vocaciON.vocacion_service.model.enums;
 
-public enum Role {
+public enum ERole {
     ADMIN,
     USER,
     EXPERTO

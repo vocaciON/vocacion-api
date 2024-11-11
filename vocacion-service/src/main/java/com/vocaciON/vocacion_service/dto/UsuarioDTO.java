@@ -10,6 +10,7 @@ import java.util.Date;
 @Data
 public class UsuarioDTO {
 
+
     @NotBlank(message = "El email es obligatorio")
     @Size(max=50, message = "No puedes pasar los 50 Caracteres")
     private String email;
@@ -29,8 +30,6 @@ public class UsuarioDTO {
     @NotBlank(message = "El telefono es obligatorio")
     @Size(max=9, message = "No puedes pasar los 50 Caracteres")
     private String telefono;
-
-
 
     private Date fechaNacimiento;
 }

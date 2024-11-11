@@ -13,7 +13,7 @@ public interface AdminResultadoPruebaService {
 
     //Metodo para la creacion de un objeto Resultado de pruebas
 
-    ResultadoPruebaDTO create(ResultadoPruebaDTO resultadoPrueba);
+    ResultadoPruebaDTO create(ResultadoPruebaDTO resultadoPruebaDTO);
 
     //Vamos a realizar la busqueda mediente el id
 
@@ -21,7 +21,7 @@ public interface AdminResultadoPruebaService {
 
     // Vamos a realizar la actualizacion del Resultado de pruebas
 
-    ResultadoPruebaDTO update(Long id, ResultadoPruebaDTO resultadoPruebaUpdate);
+    ResultadoPruebaDTO update(Long id, ResultadoPruebaDTO resultadoPruebaUpdateDTO);
 
     // Vamos a realizar la eliminacion de Resultado de pruebas
     void delete(Long id);

@@ -8,15 +8,11 @@ import lombok.Data;
 @Data
 public class ResultadoPruebaDTO {
 
-    @NotBlank(message = "El Resultado es obligatorio")
-    @Size(max=50, message = "No puedes pasar los 50 Caracteres")
+
     private String resultado;
-
-    @NotBlank(message = "Recomendacion es obligatorio")
-    @Size(max=50, message = "No puedes pasar los 50 Caracteres")
     private String recomendaciones;
-
-    @NotBlank(message = "La FeedBack es obligatorio")
-    @Size(max=50, message = "No puedes pasar los 50 Caracteres")
     private String feedback;
+    //******* de la carrera como resultado*********
+    private Integer nombre;
+    private Integer descripcion;
 }

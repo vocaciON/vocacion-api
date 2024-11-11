@@ -16,12 +16,7 @@ public interface AdminContenidoEducativoService {
 
     // Crear el objeto Contenido educativo
 
-    ContenidoEducativoDTO create(ContenidoEducativoDTO contenidoEducativo);
-
-    //Buscar contenido educativo
-
-    @Transactional
-    ContenidoEducativo create(ContenidoEducativo contenidoEducativo);
+    ContenidoEducativoDTO create(ContenidoEducativoDTO contenidoEducativoDTO);
 
     ContenidoEducativoDTO findById(Long id);
 

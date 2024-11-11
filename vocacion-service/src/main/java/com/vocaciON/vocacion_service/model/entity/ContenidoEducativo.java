@@ -38,10 +38,7 @@ public class ContenidoEducativo {
     @Column(name = "link")
     private String link;
 
-    @ManyToOne
-    @JoinColumn(name = "perfil_id", referencedColumnName = "id",
-    foreignKey = @ForeignKey(name = "FK_contenido_educativo_perfil"))
-    private Perfil perfil;
+
 
 
 

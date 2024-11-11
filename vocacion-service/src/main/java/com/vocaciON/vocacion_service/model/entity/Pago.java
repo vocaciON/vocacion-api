@@ -34,7 +34,13 @@ public class Pago {
     foreignKey = @ForeignKey(name = "FK_pago_usuario"))
     private Usuario usuario;
 
+    @OneToOne
+    @JoinColumn(name = "compra_plan_id", referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "FK_pago_compra_plan"))
+    private CompraPlan compraPlan;
+
+
     @Enumerated(EnumType.STRING)
-    @Column(name = "estadoPago")
+    @Column(name = "estado_pago")
     private EstadoPago estadoPago;
 }

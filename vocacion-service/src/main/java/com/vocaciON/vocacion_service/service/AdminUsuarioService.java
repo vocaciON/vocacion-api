@@ -1,31 +1,23 @@
 package com.vocaciON.vocacion_service.service;
 
 import com.vocaciON.vocacion_service.dto.UsuarioDTO;
+import com.vocaciON.vocacion_service.dto.UsuarioProfileDTO;
+import com.vocaciON.vocacion_service.dto.UsuarioRegistrationDTO;
 import com.vocaciON.vocacion_service.model.entity.Usuario;
 
 import java.util.List;
 
 public interface AdminUsuarioService {
-    //Registro de usuario
-    UsuarioDTO registrarUsuario(UsuarioDTO usuario);
+    //Registro de Cliente
+    UsuarioProfileDTO registerPerfil(UsuarioRegistrationDTO usuarioRegistrationDTO);
 
-    //obtener un listado de usuarios
+    // Registro del Experto
+    UsuarioProfileDTO registerExperto(UsuarioRegistrationDTO usuarioRegistrationDTO);
 
-    List<UsuarioDTO> getAll();//obtener todos
+    // Actualizar el perfil del usuario
+    UsuarioProfileDTO updateUsuarioProfile(Long id, UsuarioProfileDTO usuarioProfileDTO);
 
-    //Metodo para la creacion de un objeto usuario
-
-    UsuarioDTO create(UsuarioDTO usuario);
-
-    //Vamos a realizar la busqueda mediente el id
-
-    UsuarioDTO findById(Long id);
-
-    // Vamos a realizar la actualizacion del usuario
-
-    UsuarioDTO update(Long id, UsuarioDTO usuarioUpdate);
-
-    // Vamos a realizar la eliminacion de usuarios
-    void delete(Long id);
+    //Optener la informarcion mediante el Id
+    UsuarioProfileDTO getUsuarioProfileById(Long id);
 
 }

@@ -23,7 +23,7 @@ public class Experto {
     private Long id;
 
 
-    @Column(name = "estudios", nullable = false)
+    @Column(name = "estudios")
     private String estudios;
 
     //Adaptando a la nueva diagrama de clases
@@ -43,19 +43,9 @@ public class Experto {
 
 
     @OneToOne
-    @JoinColumn(name = "usuario_id", referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "FK_experto_usuario"))
+    @JoinColumn(name = "usuario_id", referencedColumnName = "id")
         private Usuario usuario;
 
 
 
-
-
-
-
-
-
-
-    public void setCreatedAt(LocalDateTime now) {
-    }
 }

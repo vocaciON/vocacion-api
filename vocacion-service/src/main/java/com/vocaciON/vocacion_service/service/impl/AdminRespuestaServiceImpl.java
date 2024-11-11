@@ -2,6 +2,7 @@ package com.vocaciON.vocacion_service.service.impl;
 
 import com.vocaciON.vocacion_service.dto.AsesoriaDTO;
 import com.vocaciON.vocacion_service.dto.RespuestaDTO;
+import com.vocaciON.vocacion_service.exception.ResourceNotFoundException;
 import com.vocaciON.vocacion_service.mapper.RespuestaMapper;
 import com.vocaciON.vocacion_service.model.entity.Asesoria;
 import com.vocaciON.vocacion_service.model.entity.Pregunta;
@@ -43,7 +44,7 @@ public class AdminRespuestaServiceImpl implements AdminRespuestaService {
     @Override
     public RespuestaDTO findById(Long id) { //buscar
         Respuesta respuesta = respuestaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Respuesta con el id " + id + " no existe"));
+                .orElseThrow(() -> new ResourceNotFoundException("Respuesta con el id " + id + " no existe"));
         return respuestaMapper.toDTO(respuesta);
 
     }
@@ -63,7 +64,7 @@ public class AdminRespuestaServiceImpl implements AdminRespuestaService {
     @Override
     public RespuestaDTO update(Long id, RespuestaDTO updateRespuestaDTO) {//actualizar
         Respuesta respuestaFromDB = respuestaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("La Respuesta con el id " + id + " no existe"));
+                .orElseThrow(() -> new ResourceNotFoundException("La Respuesta con el id " + id + " no existe"));
 
 
 
@@ -80,7 +81,7 @@ public class AdminRespuestaServiceImpl implements AdminRespuestaService {
     @Override
     public void delete(Long id) {
         Respuesta respuesta = respuestaRepository
-                .findById(id).orElseThrow(() -> new RuntimeException("Respuesta con el id " + id + " no existe"));
+                .findById(id).orElseThrow(() -> new ResourceNotFoundException("Respuesta con el id " + id + " no existe"));
         respuestaRepository.delete(respuesta);
 
     }

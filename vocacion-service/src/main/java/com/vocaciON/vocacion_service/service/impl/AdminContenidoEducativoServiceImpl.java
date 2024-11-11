@@ -2,6 +2,7 @@ package com.vocaciON.vocacion_service.service.impl;
 
 import com.vocaciON.vocacion_service.dto.ContenidoEducativoDTO;
 import com.vocaciON.vocacion_service.dto.ContenidoEducativoDTO;
+import com.vocaciON.vocacion_service.exception.ResourceNotFoundException;
 import com.vocaciON.vocacion_service.mapper.ContenidoEducativoMapper;
 import com.vocaciON.vocacion_service.model.entity.Asesoria;
 import com.vocaciON.vocacion_service.model.entity.ContenidoEducativo;
@@ -57,14 +58,14 @@ public class AdminContenidoEducativoServiceImpl implements AdminContenidoEducati
     @Override
     public ContenidoEducativoDTO findById(Long id) { //buscar
         ContenidoEducativo contenidoEducativo = contenidoEducativoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Contenido Educativo con el id " + id + " no existe"));
+                .orElseThrow(() -> new ResourceNotFoundException("Contenido Educativo con el id " + id + " no existe"));
         return contenidoEducativoMapper.toDTO(contenidoEducativo);
     }
 
     @Override
     public ContenidoEducativoDTO update(Long id, ContenidoEducativoDTO updateContenidoEducativoDTO) {//actualizar
         ContenidoEducativo contenidoEducativoFromDB = contenidoEducativoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("El contenido Educativo con el id " + id + " no existe"));
+                .orElseThrow(() -> new ResourceNotFoundException("El contenido Educativo con el id " + id + " no existe"));
 
         /*Perfil perfil = perfilRepository.findById(updateContenidoEducativoDTO.getPerfil().getId())
                 .orElseThrow(() -> new RuntimeException("Perfil no encontrado"+ updateContenidoEducativo.getPerfil().getId()));*/
@@ -86,7 +87,7 @@ public class AdminContenidoEducativoServiceImpl implements AdminContenidoEducati
     @Override
     public void delete(Long id) {
         ContenidoEducativo contenidoEducativo = contenidoEducativoRepository
-                .findById(id).orElseThrow(() -> new RuntimeException("Contenido Educativo con el id " + id + " no existe"));
+                .findById(id).orElseThrow(() -> new ResourceNotFoundException("Contenido Educativo con el id " + id + " no existe"));
         contenidoEducativoRepository.delete(contenidoEducativo);
 
     }

@@ -1,8 +1,11 @@
 package com.vocaciON.vocacion_service.api;
 
 
+import com.vocaciON.vocacion_service.dto.ResultadoPruebaDTO;
+import com.vocaciON.vocacion_service.dto.ResultadoPruebaDTO;
 import com.vocaciON.vocacion_service.model.entity.ResultadoPrueba;
 import com.vocaciON.vocacion_service.service.AdminResultadoPruebaService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,45 +24,42 @@ public class AdminResultadoPruebaController {
     //vamos con los metodos
     // Responder las listas
     @GetMapping
-    public ResponseEntity<List<ResultadoPrueba>> getListaResultadoPruebas() {
-        List<ResultadoPrueba> resultadoPruebas = adminResultadoPruebaService.getAll();
-        return new ResponseEntity<List<ResultadoPrueba>>(resultadoPruebas, HttpStatus.OK); //ok = 200
+    public ResponseEntity<List<ResultadoPruebaDTO>> getListaResultadoPrueba(){
+        List<ResultadoPruebaDTO> resultadoPruebas = adminResultadoPruebaService.getAll();
+        return new ResponseEntity<>(resultadoPruebas, HttpStatus.OK); //ok = 200 //ok = 200
     }
 
     //Metodo para obtener por medio del id
     @GetMapping("/{id}")
-    public ResponseEntity<ResultadoPrueba> getResultadoPruebaById(@PathVariable("id") Long id){
-        ResultadoPrueba resultadoPrueba = adminResultadoPruebaService.findById(id);
-        return new ResponseEntity<ResultadoPrueba>(resultadoPrueba, HttpStatus.OK);
+    public ResponseEntity<ResultadoPruebaDTO> getResultadoPruebaById(@PathVariable("id") Long id){
+        ResultadoPruebaDTO resultadoPrueba = adminResultadoPruebaService.findById(id);
+        return new ResponseEntity<ResultadoPruebaDTO>(resultadoPrueba, HttpStatus.OK);
     }
 
 
     //Ahora haremos el regististro, Postmappin
 
     @PostMapping
-    public ResponseEntity<ResultadoPrueba> createResultadoPrueba(@RequestBody ResultadoPrueba resultadoPrueba){
+    public ResponseEntity<ResultadoPruebaDTO> create(@Valid @RequestBody ResultadoPruebaDTO resultadoPruebaDTO){
 
-        ResultadoPrueba newResultadoPrueba = adminResultadoPruebaService.create(resultadoPrueba);
-        return new ResponseEntity<ResultadoPrueba>(newResultadoPrueba, HttpStatus.CREATED);
-
+        ResultadoPruebaDTO createResultadoPrueba = adminResultadoPruebaService.create(resultadoPruebaDTO);
+        return new ResponseEntity<>(createResultadoPrueba, HttpStatus.CREATED);
     }
 
     //Put metodo para la actualizacion
     @PutMapping("/{id}")
-    public ResponseEntity<ResultadoPrueba> updateResultadoPrueba(@PathVariable("id") Long id,
-                                                 @RequestBody ResultadoPrueba resultadoPrueba){
+    public ResponseEntity<ResultadoPruebaDTO> update(@PathVariable("id") Long id,@Valid@RequestBody ResultadoPruebaDTO resultadoPruebaDTO){
 
-        ResultadoPrueba updateResultadoPrueba = adminResultadoPruebaService.update(id,resultadoPrueba);
-        return new ResponseEntity<ResultadoPrueba>(updateResultadoPrueba, HttpStatus.OK);
+        ResultadoPruebaDTO updateResultadoPrueba = adminResultadoPruebaService.update(id,resultadoPruebaDTO);
+        return new ResponseEntity<>(updateResultadoPrueba, HttpStatus.OK);
 
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ResultadoPrueba> deleteResultadoPrueba(@PathVariable("id") Long id,
-                                                 @RequestBody ResultadoPrueba resultadoPrueba){
+    public ResponseEntity<Void> delete(@PathVariable Long id){
 
         adminResultadoPruebaService.delete(id);
-        return new ResponseEntity<ResultadoPrueba>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
     }
 }

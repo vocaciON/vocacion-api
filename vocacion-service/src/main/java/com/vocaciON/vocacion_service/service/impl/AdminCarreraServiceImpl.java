@@ -2,6 +2,7 @@ package com.vocaciON.vocacion_service.service.impl;
 
 
 import com.vocaciON.vocacion_service.dto.CarreraDTO;
+import com.vocaciON.vocacion_service.exception.ResourceNotFoundException;
 import com.vocaciON.vocacion_service.mapper.AsesoriaMapper;
 import com.vocaciON.vocacion_service.mapper.CarreraMapper;
 import com.vocaciON.vocacion_service.model.entity.Asesoria;
@@ -22,7 +23,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdminCarreraServiceImpl implements AdminCarreraService {
     private final CarreraRepository carreraRepository;
-
     private final CarreraMapper carreraMapper;
     private final AsesoriaMapper asesoriaMapper;
     private final AsesoriaRepository asesoriaRepository;
@@ -41,7 +41,7 @@ public class AdminCarreraServiceImpl implements AdminCarreraService {
     @Override
     public CarreraDTO findById(Long id) { //buscar
         Carrera carrera = carreraRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Carrera con el id " + id + " no existe"));
+                .orElseThrow(() -> new ResourceNotFoundException("Carrera con el id " + id + " no existe"));
         return carreraMapper.toDTO(carrera);
 
     }
@@ -60,7 +60,7 @@ public class AdminCarreraServiceImpl implements AdminCarreraService {
     @Override
     public CarreraDTO update(Long id, CarreraDTO updateCarreraDTO) {//actualizar
         Carrera carreraFromDB = carreraRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("La carrera con el id " + id + " no existe"));
+                .orElseThrow(() -> new ResourceNotFoundException("La carrera con el id " + id + " no existe"));
 
         carreraFromDB.setNombre(updateCarreraDTO.getNombre());
         carreraFromDB.setDescripcion(updateCarreraDTO.getDescripcion());
@@ -76,7 +76,7 @@ public class AdminCarreraServiceImpl implements AdminCarreraService {
     @Override
     public void delete(Long id) {
         Carrera carrera = carreraRepository
-                .findById(id).orElseThrow(() -> new RuntimeException("Carrera con el id " + id + " no existe"));
+                .findById(id).orElseThrow(() -> new ResourceNotFoundException("Carrera con el id " + id + " no existe"));
         carreraRepository.delete(carrera);
 
     }

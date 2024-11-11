@@ -1,12 +1,9 @@
 package com.vocaciON.vocacion_service.service.impl;
 
 
-import com.vocaciON.vocacion_service.dto.ExpertoDTO;
 import com.vocaciON.vocacion_service.dto.PruebaVocacionDTO;
+import com.vocaciON.vocacion_service.exception.ResourceNotFoundException;
 import com.vocaciON.vocacion_service.mapper.PruebaVocacionMapper;
-import com.vocaciON.vocacion_service.model.entity.ContenidoEducativo;
-import com.vocaciON.vocacion_service.model.entity.Experto;
-import com.vocaciON.vocacion_service.model.entity.Perfil;
 import com.vocaciON.vocacion_service.model.entity.PruebaVocacion;
 import com.vocaciON.vocacion_service.repository.PerfilRepository;
 import com.vocaciON.vocacion_service.repository.PruebaVocacionRepository;
@@ -56,7 +53,7 @@ public class AdminPruebaVocacionServiceImpl implements AdminPruebaVocacionServic
     @Override
     public PruebaVocacionDTO findById(Long id) { //buscar
         PruebaVocacion pruebaVocacion = pruebaVocacionRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Prueba con el id " + id + " no existe"));
+                .orElseThrow(() -> new ResourceNotFoundException("Prueba con el id " + id + " no existe"));
         return pruebaVocacionMapper.toDTO(pruebaVocacion);
 
     }
@@ -64,7 +61,7 @@ public class AdminPruebaVocacionServiceImpl implements AdminPruebaVocacionServic
     @Override
     public PruebaVocacionDTO update(Long id, PruebaVocacionDTO updatePruebaVocacionDTO) {//actualizar
         PruebaVocacion pruebaVocacionFromDB = pruebaVocacionRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("La prueba con el id " + id + " no existe"));
+                .orElseThrow(() -> new ResourceNotFoundException("La prueba con el id " + id + " no existe"));
 
 
         /*Perfil perfil = perfilRepository.findById(UpdatePruebaVocacion.getPerfil().getId())
@@ -84,7 +81,7 @@ public class AdminPruebaVocacionServiceImpl implements AdminPruebaVocacionServic
     @Override
     public void delete(Long id) {
         PruebaVocacion pruebaVocacion = pruebaVocacionRepository
-                .findById(id).orElseThrow(() -> new RuntimeException("Prueba con el id " + id + " no existe"));
+                .findById(id).orElseThrow(() -> new ResourceNotFoundException("Prueba con el id " + id + " no existe"));
         pruebaVocacionRepository.delete(pruebaVocacion);
 
     }

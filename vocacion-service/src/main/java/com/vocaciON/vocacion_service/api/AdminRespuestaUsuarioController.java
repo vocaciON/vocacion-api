@@ -24,7 +24,7 @@ public class AdminRespuestaUsuarioController {
     // Responder las listas
     @GetMapping
     public ResponseEntity<List<RespuestaUsuarioDTO>> getListaRespuestaUsuario() {
-        List<RespuestaUsuarioDTO> respuestaUsuarios = AdminRespuestaUsuarioService.getAll();
+        List<RespuestaUsuarioDTO> respuestaUsuarios = adminRespuestaUsuarioService.getAll();
         return new ResponseEntity<>(respuestaUsuarios, HttpStatus.OK); //ok = 200
     }
 
