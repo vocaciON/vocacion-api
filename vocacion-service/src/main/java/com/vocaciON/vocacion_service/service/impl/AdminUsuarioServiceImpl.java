@@ -1,5 +1,7 @@
 package com.vocaciON.vocacion_service.service.impl;
 
+import com.vocaciON.vocacion_service.dto.AuthResponseDTO;
+import com.vocaciON.vocacion_service.dto.LoginDTO;
 import com.vocaciON.vocacion_service.dto.UsuarioProfileDTO;
 import com.vocaciON.vocacion_service.dto.UsuarioRegistrationDTO;
 import com.vocaciON.vocacion_service.exception.ResourceNotFoundException;
@@ -13,9 +15,13 @@ import com.vocaciON.vocacion_service.repository.ExpertoRepository;
 import com.vocaciON.vocacion_service.repository.PerfilRepository;
 import com.vocaciON.vocacion_service.repository.RoleRepository;
 import com.vocaciON.vocacion_service.repository.UsuarioRepository;
+import com.vocaciON.vocacion_service.security.UsuarioPrincipal;
 import com.vocaciON.vocacion_service.service.AdminUsuarioService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +42,8 @@ public class AdminUsuarioServiceImpl implements AdminUsuarioService {
     private final PasswordEncoder passwordEncoder;
 
     private final UsuarioMapper usuarioMapper;
+
+    private final AuthenticationManager authenticationManager;
     @Override
     public UsuarioProfileDTO registerPerfil(UsuarioRegistrationDTO usuarioRegistrationDTO) {
         return registerUsuarioWithRole(usuarioRegistrationDTO, ERole.USER);
@@ -44,6 +52,28 @@ public class AdminUsuarioServiceImpl implements AdminUsuarioService {
     @Override
     public UsuarioProfileDTO registerExperto(UsuarioRegistrationDTO usuarioRegistrationDTO) {
         return registerUsuarioWithRole(usuarioRegistrationDTO, ERole.EXPERTO);
+    }
+
+    @Override
+    public AuthResponseDTO login(LoginDTO loginDTO) {
+        //Autenticar al usuario usando AuthenticationManagger
+
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginDTO.getCorreo(), loginDTO.getPassword()));
+
+        //Una vez autenticado, el objeto Authentication contiene la informacion del usuario autenticado
+
+        UsuarioPrincipal usuarioPrincipal = (UsuarioPrincipal) authentication.getPrincipal();
+        Usuario usuario = usuarioPrincipal.getUsuario();
+
+
+        String token= "fsdfsdf";
+
+        AuthResponseDTO responseDTO = usuarioMapper.toAuthResponseDTO(usuario, token);
+
+
+
+        return responseDTO;
     }
 
     @Override

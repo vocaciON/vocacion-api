@@ -1,8 +1,6 @@
 package com.vocaciON.vocacion_service.service;
 
-import com.vocaciON.vocacion_service.dto.UsuarioDTO;
-import com.vocaciON.vocacion_service.dto.UsuarioProfileDTO;
-import com.vocaciON.vocacion_service.dto.UsuarioRegistrationDTO;
+import com.vocaciON.vocacion_service.dto.*;
 import com.vocaciON.vocacion_service.model.entity.Usuario;
 
 import java.util.List;
@@ -13,6 +11,9 @@ public interface AdminUsuarioService {
 
     // Registro del Experto
     UsuarioProfileDTO registerExperto(UsuarioRegistrationDTO usuarioRegistrationDTO);
+
+    //metodo para la autenticacion en el login
+    AuthResponseDTO login(LoginDTO loginDTO);
 
     // Actualizar el perfil del usuario
     UsuarioProfileDTO updateUsuarioProfile(Long id, UsuarioProfileDTO usuarioProfileDTO);
