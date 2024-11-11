@@ -1,8 +1,6 @@
 package com.vocaciON.vocacion_service.mapper;
 
-import com.vocaciON.vocacion_service.dto.UsuarioDTO;
-import com.vocaciON.vocacion_service.dto.UsuarioProfileDTO;
-import com.vocaciON.vocacion_service.dto.UsuarioRegistrationDTO;
+import com.vocaciON.vocacion_service.dto.*;
 import com.vocaciON.vocacion_service.model.entity.Perfil;
 import com.vocaciON.vocacion_service.model.entity.Usuario;
 import lombok.RequiredArgsConstructor;
@@ -75,6 +73,28 @@ public class UsuarioMapper {
         return usuarioProfileDTO;
     }
     //////////////////////////Metodo para el loginDTO y para el authresponseDTO
+    //convertir el metodo dto a usuario
+    public Usuario toUsuarioEntity(LoginDTO loginDTO){
+        return modelMapper.map(loginDTO, Usuario.class);
+    }
+
+    //Convertir el usuario a authResponseDTO para la respuesta de autenticacion
+    public AuthResponseDTO toAuthResponseDTO(Usuario usuario, String token) {
+        AuthResponseDTO authResponseDTO = new AuthResponseDTO();
+        authResponseDTO.setToken(token);
+
+        //obtener el nombre y el apellido
+        String nombre = (usuario.getNombre() != null) ? usuario.getNombre():"";
+        String apellido = (usuario.getApellido() != null) ? usuario.getApellido() : "";
+
+        authResponseDTO.setNombre(nombre);
+        authResponseDTO.setApellido(apellido);
+
+        authResponseDTO.setRole(usuario.getRole().getName().name());
+
+        return authResponseDTO;
+
+    }
 }
 
 
