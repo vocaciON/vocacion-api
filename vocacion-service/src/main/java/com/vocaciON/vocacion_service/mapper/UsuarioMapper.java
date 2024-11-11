@@ -74,6 +74,7 @@ public class UsuarioMapper {
 
         return usuarioProfileDTO;
     }
+    //////////////////////////Metodo para el loginDTO y para el authresponseDTO
 }
 
 
