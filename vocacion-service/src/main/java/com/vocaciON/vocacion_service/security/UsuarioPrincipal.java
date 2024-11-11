@@ -24,6 +24,7 @@ public class UsuarioPrincipal implements UserDetails {
 
     private Usuario usuario;
 
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
