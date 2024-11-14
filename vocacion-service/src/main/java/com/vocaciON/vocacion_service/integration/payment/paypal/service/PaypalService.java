@@ -104,6 +104,19 @@ public class PaypalService {
                 .toEntity(OrderResponse.class)
                 .getBody();
 
+
+
+    }
+
+    public OrderCaptureResponse captureOrder (String orderId){
+        return paypalClient.post()
+                .uri("/v2/checkout/orders/{order_id}/capture",orderId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION,"Bearer"+getAccessToken())
+                .retrieve()
+                .toEntity(OrderCaptureResponse.class)
+                .getBody();
+
     }
 
 
