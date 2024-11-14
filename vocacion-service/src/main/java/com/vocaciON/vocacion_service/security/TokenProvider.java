@@ -47,7 +47,7 @@ public class TokenProvider {
     }
 
     public String createAccessToken(Authentication authentication) {
-        String email = authentication.getName();
+        String correo = authentication.getName();
 
         String role = authentication
                 .getAuthorities()
@@ -58,7 +58,7 @@ public class TokenProvider {
 
         return Jwts
                 .builder()
-                .setSubject(email)
+                .setSubject(correo)
                 .claim("role", role)
                 .signWith(key, SignatureAlgorithm.HS512)
                 .setExpiration(new Date(System.currentTimeMillis() + jwtValidityInSeconds*1000))

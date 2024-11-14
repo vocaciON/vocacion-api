@@ -29,7 +29,7 @@ public class ContenidoEducativo {
     private Boolean favorito;
 
     @Column(name = "fecha_create")
-    private LocalDateTime fechaCreate;
+    private LocalDateTime createdAt;
     @Column(name = "fecha_update")
     private LocalDateTime fechaUpdate;
 

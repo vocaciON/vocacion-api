@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class UsuarioCreateUpdateDTO {
 
-    @NotBlank(message = "El email es obligatorio")
+    @NotBlank(message = "El email es obligatorio createupdateDTO")
     @Size(max=50, message = "No puedes pasar los 50 Caracteres")
     private String email;
 

@@ -1,5 +1,7 @@
 package com.vocaciON.vocacion_service.api;
 
+import com.vocaciON.vocacion_service.dto.AuthResponseDTO;
+import com.vocaciON.vocacion_service.dto.LoginDTO;
 import com.vocaciON.vocacion_service.dto.UsuarioProfileDTO;
 import com.vocaciON.vocacion_service.dto.UsuarioRegistrationDTO;
 import com.vocaciON.vocacion_service.model.entity.Usuario;
@@ -38,5 +40,11 @@ public class AuthController {
         UsuarioProfileDTO usuarioProfile = adminUsuarioService.registerExperto(usuarioRegistrationDTO);
         return new ResponseEntity<>(usuarioProfile, HttpStatus.CREATED);
 
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<AuthResponseDTO> login(@Valid @RequestBody LoginDTO loginDTO){
+        AuthResponseDTO authResponse = adminUsuarioService.login(loginDTO);
+        return new ResponseEntity<>(authResponse, HttpStatus.OK);
     }
 }

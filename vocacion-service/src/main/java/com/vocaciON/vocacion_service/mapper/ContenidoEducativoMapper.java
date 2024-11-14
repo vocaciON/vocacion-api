@@ -1,7 +1,9 @@
 package com.vocaciON.vocacion_service.mapper;
 
 import com.vocaciON.vocacion_service.dto.AsesoriaDTO;
+import com.vocaciON.vocacion_service.dto.ContenidoEducativoCreateUpdateDTO;
 import com.vocaciON.vocacion_service.dto.ContenidoEducativoDTO;
+import com.vocaciON.vocacion_service.dto.ContenidoEducativoDetailsDTO;
 import com.vocaciON.vocacion_service.model.entity.Asesoria;
 import com.vocaciON.vocacion_service.model.entity.ContenidoEducativo;
 import org.modelmapper.ModelMapper;
@@ -16,11 +18,15 @@ public class ContenidoEducativoMapper {
         this.modelMapper = modelMapper;
     }
 
-    public ContenidoEducativoDTO toDTO(ContenidoEducativo contenidoEducativo) {
-        return modelMapper.map(contenidoEducativo, ContenidoEducativoDTO.class);
+    public ContenidoEducativoDetailsDTO toDetailsDTO(ContenidoEducativo contenidoEducativo) {
+        return modelMapper.map(contenidoEducativo, ContenidoEducativoDetailsDTO.class);
     }
 
-    public ContenidoEducativo toEntity(ContenidoEducativoDTO contenidoEducativoDTO) {
-        return modelMapper.map(contenidoEducativoDTO, ContenidoEducativo.class);
+    public ContenidoEducativo toEntity(ContenidoEducativoCreateUpdateDTO contenidoEducativoCreateUpdateDTO) {
+        return modelMapper.map(contenidoEducativoCreateUpdateDTO, ContenidoEducativo.class);
+    }
+
+    public ContenidoEducativoCreateUpdateDTO toCreateUpdateDTO(ContenidoEducativo contenidoEducativo) {
+        return modelMapper.map(contenidoEducativo, ContenidoEducativoCreateUpdateDTO.class);
     }
 }

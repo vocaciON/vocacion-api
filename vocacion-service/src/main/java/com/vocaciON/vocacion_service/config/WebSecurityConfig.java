@@ -10,7 +10,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -25,6 +27,8 @@ import static org.springframework.security.web.util.matcher.AntPathRequestMatche
 
 @RequiredArgsConstructor
 @Configuration
+@EnableWebSecurity
+@EnableMethodSecurity
 public class WebSecurityConfig {
 
     private final TokenProvider tokenProvider;
@@ -47,7 +51,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(antMatcher("/auth/login")).permitAll()
                         .requestMatchers(antMatcher("/auth/register/perfil")).permitAll()
-                        .requestMatchers(antMatcher("/perfil/contenido")).permitAll()// url que tiene que ver cualquiercosa
+                        .requestMatchers(antMatcher("/contenidoEducativo/media")).permitAll()// url que tiene que ver cualquiercosa
 
                         .requestMatchers( "api/v1/swagger-ui/**","v3/api-docs/**","/swagger-ui.html","/swagger-iu/**","/webjars/**").permitAll()
                         .anyRequest().authenticated()

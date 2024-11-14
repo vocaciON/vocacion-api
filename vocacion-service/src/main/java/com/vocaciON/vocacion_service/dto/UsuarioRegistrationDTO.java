@@ -15,7 +15,7 @@ public class UsuarioRegistrationDTO {
     private String apellido;
 
     @Email(message = "El correo electronico no es valido")
-    @NotBlank(message = "EL correo es obligatorio")
+    @NotBlank(message = "EL correo es obligatorio usuarioRegistrationDTO")
     private String email;
 
     @NotBlank(message = "la contraseña es obligatorio")

@@ -11,7 +11,7 @@ import java.util.Date;
 public class UsuarioDTO {
 
 
-    @NotBlank(message = "El email es obligatorio")
+    @NotBlank(message = "El email es obligatorio usuarioDTO")
     @Size(max=50, message = "No puedes pasar los 50 Caracteres")
     private String email;
 

@@ -2,10 +2,14 @@ package com.vocaciON.vocacion_service.service;
 
 import com.vocaciON.vocacion_service.dto.*;
 import com.vocaciON.vocacion_service.model.entity.Usuario;
+import com.vocaciON.vocacion_service.security.TokenProvider;
 
 import java.util.List;
 
 public interface AdminUsuarioService {
+
+
+
     //Registro de Cliente
     UsuarioProfileDTO registerPerfil(UsuarioRegistrationDTO usuarioRegistrationDTO);
 

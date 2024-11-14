@@ -15,6 +15,7 @@ import com.vocaciON.vocacion_service.repository.ExpertoRepository;
 import com.vocaciON.vocacion_service.repository.PerfilRepository;
 import com.vocaciON.vocacion_service.repository.RoleRepository;
 import com.vocaciON.vocacion_service.repository.UsuarioRepository;
+import com.vocaciON.vocacion_service.security.TokenProvider;
 import com.vocaciON.vocacion_service.security.UsuarioPrincipal;
 import com.vocaciON.vocacion_service.service.AdminUsuarioService;
 import lombok.Data;
@@ -44,11 +45,15 @@ public class AdminUsuarioServiceImpl implements AdminUsuarioService {
     private final UsuarioMapper usuarioMapper;
 
     private final AuthenticationManager authenticationManager;
+
+    private final TokenProvider tokenProvider;
+
+    @Transactional
     @Override
     public UsuarioProfileDTO registerPerfil(UsuarioRegistrationDTO usuarioRegistrationDTO) {
         return registerUsuarioWithRole(usuarioRegistrationDTO, ERole.USER);
     }
-
+    @Transactional
     @Override
     public UsuarioProfileDTO registerExperto(UsuarioRegistrationDTO usuarioRegistrationDTO) {
         return registerUsuarioWithRole(usuarioRegistrationDTO, ERole.EXPERTO);
@@ -59,7 +64,7 @@ public class AdminUsuarioServiceImpl implements AdminUsuarioService {
         //Autenticar al usuario usando AuthenticationManagger
 
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginDTO.getCorreo(), loginDTO.getPassword()));
+                new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword()));
 
         //Una vez autenticado, el objeto Authentication contiene la informacion del usuario autenticado
 
@@ -67,7 +72,7 @@ public class AdminUsuarioServiceImpl implements AdminUsuarioService {
         Usuario usuario = usuarioPrincipal.getUsuario();
 
 
-        String token= "fsdfsdf";
+        String token= tokenProvider.createAccessToken(authentication);
 
         AuthResponseDTO responseDTO = usuarioMapper.toAuthResponseDTO(usuario, token);
 
