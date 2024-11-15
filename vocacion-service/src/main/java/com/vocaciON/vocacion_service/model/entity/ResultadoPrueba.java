@@ -5,8 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
-@Table(name = "resultadoPruebas")
+@Table(name = "resultado_pruebas")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,13 +28,19 @@ public class ResultadoPrueba {
     @Column(name = "feedback")
     private String feedback;
 
-    @ManyToOne
-    @JoinColumn(name = "prueba_id", referencedColumnName = "id", nullable = false)
-    private PruebaVocacion pruebaVocacion;
+    @Column(name = "fecha_create")
+    private LocalDateTime fechaCreate;
+    @Column(name = "fecha_update")
+    private LocalDateTime fechaUpdate;
 
-    @ManyToOne
-    @JoinColumn(name = "usuario_id", referencedColumnName = "idUsuario", nullable = false)
-    private Usuario usuario;
+
+
+
+    @OneToOne
+    @JoinColumn(name = "carrera_id",referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "FK_resultado_prueba_carrera"))
+    private Carrera carrera;
+
 
 
 }
