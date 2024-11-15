@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Confirmación de Compras</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .email-container {
+            background-color: #ffffff;
+            margin: 2rem auto;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .header h1 {
+            color: #4CAF50;
+        }
+        .content {
+            font-size: 1rem;
+            color: #333333;
+            line-height: 1.6;
+        }
+        .btn {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: #ffffff;
+            padding: 0.75rem 1.5rem;
+            margin: 1rem 0;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        .btn:hover {
+            background-color: #45a049;
+        }
+        .footer {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #777777;
+            margin-top: 1.5rem;
+        }
+        .amount {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333333;
+        }
+    </style>
+</head>
+<body>
+<div class="email-container">
+    <div class="header">
+        <h1>¡Gracias por tu compra, <span th:text="${username}"/>!</h1>
+    </div>
+    <div class="content">
+        <p>Tu compra ha sido registrada exitosamente. A continuación, te mostramos el total de tu pedido:</p>
+        <p class="amount">Monto a Pagar: <span th:text="${total}"/> USD</p>
+        <a href="#" th:href="${detailsLink}" class="btn">Ver Detalles del Pedido</a>
+        <p>Si no realizaste esta compra, por favor ignora este mensaje o contacta con nuestro equipo de soporte.</p>
+    </div>
+    <div class="footer">
+        <p>© 2024 vocaciON. Todos los derechos reservados.</p>
+    </div>
+</div>
+</body>
+</html>

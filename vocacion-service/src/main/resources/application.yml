@@ -1,16 +1,14 @@
 spring:
-  email:
+  mail:
     default-encoding: UTF-8
     host: smtp.gmail.com
     username: mauricioterrones98@gmail.com
     password: pohm pbav oqlv tglz
     port: 587
+    protocol: smtp
     properties:
       mail:
         smtp:
-          auth:
-            starttls:
-              enable: true
-              required: true
-    protocol: smtp
-    test-connection: false
+          auth: true
+          starttls:
+            enable: true
