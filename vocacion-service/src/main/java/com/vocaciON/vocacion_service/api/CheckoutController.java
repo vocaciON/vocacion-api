@@ -3,6 +3,7 @@ package com.vocaciON.vocacion_service.api;
 import com.vocaciON.vocacion_service.dto.PaymentCaptureResponse;
 import com.vocaciON.vocacion_service.dto.PaymentOrderResponse;
 import com.vocaciON.vocacion_service.service.CheckoutService;
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,7 @@ public class CheckoutController {
             @RequestParam String returnUrl,
             @RequestParam String cancelUrl,
             @RequestParam(required = false,defaultValue = "paypal") String paymentProvider
-    ){
+    ) throws MessagingException {
         PaymentOrderResponse response = checkoutService.createPayment(pagoId, returnUrl, cancelUrl);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
@@ -35,7 +36,7 @@ public class CheckoutController {
     public ResponseEntity<PaymentCaptureResponse> capturePaymentOrder(
             @RequestParam String orderId,
             @RequestParam(required = false,defaultValue = "paypal")String paymentProvider
-    ){
+    ) throws Exception {
         PaymentCaptureResponse response = checkoutService.capturePayment(orderId);
 
         if (response.isCompleted()){
