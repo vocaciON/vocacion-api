@@ -26,4 +26,8 @@ public interface AdminPagoService {
     void delete(Long id);
     //Agregando un nuevo metodo , Retornar una lista de tipo PagosReportDTO
     List<PagoReportDTO> getPagoReportByDate();
+
+    PagoDTO confirmPago(Long pagoId);
+
+    PagoDTO getPagoById(Long id);
 }

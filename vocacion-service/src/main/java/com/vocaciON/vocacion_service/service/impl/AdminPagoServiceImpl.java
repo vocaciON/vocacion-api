@@ -97,6 +97,24 @@ public class AdminPagoServiceImpl implements AdminPagoService {
     }
 
     @Override
+    public PagoDTO confirmPago(Long pagoId) {
+        Pago pago = pagoRepository.findById(pagoId)
+                .orElseThrow(() -> new ResourceNotFoundException("Pago no encontrado"));
+
+        pago.setEstadoPago(EstadoPago.PAID);
+
+        Pago updatedPago = pagoRepository.save(pago);
+        return pagoMapper.toPagoDTO(updatedPago);
+    }
+
+    @Override
+    public PagoDTO getPagoById(Long id) {
+        Pago pago = pagoRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Pago no encontrado"));
+        return pagoMapper.toPagoDTO(pago);
+    }
+
+    @Override
     public List<PagoDTO> getAllPagos() {
         List<Pago> pagos = pagoRepository.findAll();
 
