@@ -131,8 +131,11 @@ public class AdminPagoServiceImpl implements AdminPagoService {
 
     @Override
     public void delete(Long id) {
-
+        Pago pago = pagoRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Pago no encontrado con id: " + id));
+        pagoRepository.delete(pago);
     }
+
 
 
 }
