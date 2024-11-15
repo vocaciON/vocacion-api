@@ -21,29 +21,42 @@ public class Asesoria {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "fecha", nullable = false)
-    private LocalDateTime fecha;
+    @Column(name="tema_tratar", nullable=false)
+    private String temaTratar;
 
-    @Column(name = "estado", nullable = false)
-    private String estado;
+    @Column(name = "fecha_asesoria", nullable = false)
+    private Date fechaAsesoria;
 
-    /*@ManyToOne
-    @JoinColumn(name = "usuario_id", referencedColumnName = "idUsuario", nullable = false)
-    private Usuario usuario;
+    @Column(name = "fecha_create")
+    private LocalDateTime fechaCreate;
 
-    @ManyToOne
-    @JoinColumn(name = "experto_id", referencedColumnName = "id", nullable = false)
-    private Experto experto;*/
-    @ManyToOne
-    @JoinColumn(name = "experto_id", referencedColumnName = "id",
-    foreignKey = @ForeignKey(name = "FK_asesoria_experto"))
-    private Experto experto;
+    @Column(name = "fecha_update")
+    private LocalDateTime fechaUpdate;
+
+    @Column(name = "link_asesoria", nullable = false)
+    private String linkAsesoria;
+
+    @Column(name = "costo")
+    private double costo;
+
+
+
+
+
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "estadoAsesoria")
+    @Column(name = "estado_asesoria")
     private EstadoAsesoria estadoAsesoria;
 
+    @OneToOne
+    @JoinColumn(name = "experto_id",referencedColumnName = "id",
+            foreignKey =@ForeignKey(name = "FK_asesoria_experto") )
+    private Experto experto;
 
+    @OneToOne
+    @JoinColumn(name = "perfil_id",referencedColumnName = "id",
+    foreignKey = @ForeignKey(name = "FK_asesoria_perfil"))
+    private Perfil perfil;
 
 
 

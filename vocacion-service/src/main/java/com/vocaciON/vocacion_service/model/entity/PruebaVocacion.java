@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 
 @Entity
-@Table(name = "pruebaVocacionales")
+@Table(name = "prueba_vocacions")
 
 public class PruebaVocacion {
     @Id
@@ -25,11 +25,18 @@ public class PruebaVocacion {
     @Column(name = "descripcion")
     private String descripcion;
 
-    @Column(name = "tipo")
-    private String tipo;
-
     @Column(name = "limite_tiempo")
     private Integer limiteTiempo;
+
+    @Column(name = "fecha_create")
+    private LocalDateTime fechaCreate;
+    @Column(name = "fecha_update")
+    private LocalDateTime fechaUpdate;
+
+    @ManyToOne
+    @JoinColumn(name = "perfil_id",referencedColumnName = "id",
+    foreignKey = @ForeignKey(name = "FK_prueba_vocacion_perfil"))
+    private Perfil perfil;
 
 
     @OneToOne
