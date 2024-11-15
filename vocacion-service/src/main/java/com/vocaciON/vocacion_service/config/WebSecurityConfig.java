@@ -52,6 +52,7 @@ public class WebSecurityConfig {
                         .requestMatchers(antMatcher("/auth/login")).permitAll()
                         .requestMatchers(antMatcher("/auth/register/perfil")).permitAll()
                         .requestMatchers(antMatcher("/contenidoEducativo/media")).permitAll()// url que tiene que ver cualquiercosa
+                        .requestMatchers(antMatcher("/mail/**")).permitAll()
 
                         .requestMatchers( "api/v1/swagger-ui/**","v3/api-docs/**","/swagger-ui.html","/swagger-iu/**","/webjars/**").permitAll()
                         .anyRequest().authenticated()
