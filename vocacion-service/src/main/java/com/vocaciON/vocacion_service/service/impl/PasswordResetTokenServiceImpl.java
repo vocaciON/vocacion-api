@@ -10,6 +10,7 @@ import com.vocaciON.vocacion_service.repository.UsuarioRepository;
 import com.vocaciON.vocacion_service.service.PasswordResetTokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +26,7 @@ public class PasswordResetTokenServiceImpl implements PasswordResetTokenService 
     private final PasswordResetTokenRepository passwordResetTokenRepository;
     private final UsuarioRepository usuarioRepository;
     private final EmailService emailService;
+    private final PasswordEncoder passwordEncoder;
 
     @Value("${spring.mail.username}")
     private String mailFrom;
@@ -83,7 +85,7 @@ public class PasswordResetTokenServiceImpl implements PasswordResetTokenService 
                 .orElseThrow(()-> new ResourceNotFoundException("Token invalido o expirado"));
 
         Usuario usuario = resetToken.getUsuario();
-        usuario.setPassword(newPassword);
+        usuario.setPassword(passwordEncoder.encode(newPassword));
 
         usuarioRepository.save(usuario);
 
