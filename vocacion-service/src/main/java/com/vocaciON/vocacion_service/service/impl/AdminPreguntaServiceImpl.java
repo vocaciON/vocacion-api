@@ -2,6 +2,7 @@ package com.vocaciON.vocacion_service.service.impl;
 
 import com.vocaciON.vocacion_service.dto.AsesoriaDTO;
 import com.vocaciON.vocacion_service.dto.PreguntaDTO;
+import com.vocaciON.vocacion_service.exception.ResourceNotFoundException;
 import com.vocaciON.vocacion_service.mapper.PreguntaMapper;
 import com.vocaciON.vocacion_service.model.entity.Asesoria;
 import com.vocaciON.vocacion_service.model.entity.Pregunta;
@@ -43,7 +44,7 @@ public class AdminPreguntaServiceImpl implements AdminPreguntaService {
     @Override
     public PreguntaDTO findById(Long id) { //buscar
         Pregunta pregunta = preguntaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Pregunta con el id " + id + " no existe"));
+                .orElseThrow(() -> new ResourceNotFoundException("Pregunta con el id " + id + " no existe"));
         return preguntaMapper.toDTO(pregunta);
 
 
@@ -88,7 +89,7 @@ public class AdminPreguntaServiceImpl implements AdminPreguntaService {
     @Override
     public void delete(Long id) {
         Pregunta pregunta = preguntaRepository
-                .findById(id).orElseThrow(() -> new RuntimeException("Asesoria con el id " + id + " no existe"));
+                .findById(id).orElseThrow(() -> new ResourceNotFoundException("Asesoria con el id " + id + " no existe"));
         preguntaRepository.delete(pregunta);
 
     }

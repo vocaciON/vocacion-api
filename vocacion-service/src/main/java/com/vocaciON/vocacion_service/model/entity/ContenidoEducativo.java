@@ -29,7 +29,7 @@ public class ContenidoEducativo {
     private Boolean favorito;
 
     @Column(name = "fecha_create")
-    private LocalDateTime fechaCreate;
+    private LocalDateTime createdAt;
     @Column(name = "fecha_update")
     private LocalDateTime fechaUpdate;
 
@@ -38,10 +38,7 @@ public class ContenidoEducativo {
     @Column(name = "link")
     private String link;
 
-    @ManyToOne
-    @JoinColumn(name = "perfil_id", referencedColumnName = "id",
-    foreignKey = @ForeignKey(name = "FK_contenido_educativo_perfil"))
-    private Perfil perfil;
+
 
 
 

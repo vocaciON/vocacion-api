@@ -2,6 +2,7 @@ package com.vocaciON.vocacion_service.service.impl;
 
 import com.vocaciON.vocacion_service.dto.AsesoriaDTO;
 import com.vocaciON.vocacion_service.dto.RespuestaUsuarioDTO;
+import com.vocaciON.vocacion_service.exception.ResourceNotFoundException;
 import com.vocaciON.vocacion_service.mapper.RespuestaUsuarioMapper;
 import com.vocaciON.vocacion_service.model.entity.Asesoria;
 import com.vocaciON.vocacion_service.model.entity.RespuestaUsuario;
@@ -45,7 +46,7 @@ public class AdminRespuestaUsuarioServiceImpl implements AdminRespuestaUsuarioSe
     @Override
     public RespuestaUsuarioDTO findById(Long id) { //buscar
         RespuestaUsuario respuestaUsuario = respuestaUsuarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Respuestas de Usuario con el id " + id + " no existe"));
+                .orElseThrow(() -> new ResourceNotFoundException("Respuestas de Usuario con el id " + id + " no existe"));
         return respuestaUsuarioMapper.toDTO(respuestaUsuario);
 
     }
@@ -67,7 +68,7 @@ public class AdminRespuestaUsuarioServiceImpl implements AdminRespuestaUsuarioSe
     @Override
     public RespuestaUsuarioDTO update(Long id, RespuestaUsuarioDTO updateRespuestaUsuarioDTO) {//actualizar
         RespuestaUsuario respuestaUsuarioFromDB = respuestaUsuarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("La Respuesta de usuario con el id " + id + " no existe"));
+                .orElseThrow(() -> new ResourceNotFoundException("La Respuesta de usuario con el id " + id + " no existe"));
 
 
 
@@ -84,7 +85,7 @@ public class AdminRespuestaUsuarioServiceImpl implements AdminRespuestaUsuarioSe
     @Override
     public void delete(Long id) {
         RespuestaUsuario respuestaUsuario = respuestaUsuarioRepository
-                .findById(id).orElseThrow(() -> new RuntimeException("Asesoria con el id " + id + " no existe"));
+                .findById(id).orElseThrow(() -> new ResourceNotFoundException("Asesoria con el id " + id + " no existe"));
         respuestaUsuarioRepository.delete(respuestaUsuario);
 
     }

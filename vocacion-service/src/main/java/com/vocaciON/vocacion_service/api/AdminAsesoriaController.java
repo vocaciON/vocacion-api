@@ -1,6 +1,7 @@
 package com.vocaciON.vocacion_service.api;
 
 
+import com.vocaciON.vocacion_service.dto.AsesoriaCreateUpdateDTO;
 import com.vocaciON.vocacion_service.dto.AsesoriaDTO;
 import com.vocaciON.vocacion_service.model.entity.Asesoria;
 import com.vocaciON.vocacion_service.service.AdminAsesoriaService;
@@ -8,6 +9,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +17,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/admin/asesorias")
+@PreAuthorize("hastRole('ADMIN','EXPERTO')")
 
 public class AdminAsesoriaController {
 
@@ -39,18 +42,18 @@ public class AdminAsesoriaController {
     //Ahora haremos el regististro, Postmappin
 
     @PostMapping
-    public ResponseEntity<AsesoriaDTO> create(@Valid @RequestBody AsesoriaDTO asesoriaDTO){
+    public ResponseEntity<AsesoriaDTO> create(@Valid @RequestBody AsesoriaCreateUpdateDTO asesoriaCreateUpdateDTO){
 
-        AsesoriaDTO createAsesoria = adminAsesoriaService.create(asesoriaDTO);
+        AsesoriaDTO createAsesoria = adminAsesoriaService.create(asesoriaCreateUpdateDTO);
         return new ResponseEntity<>(createAsesoria, HttpStatus.CREATED);
 
     }
 
     //Put metodo para la actualizacion
     @PutMapping("/{id}")
-    public ResponseEntity<AsesoriaDTO> update(@PathVariable("id") Long id,@Valid@RequestBody AsesoriaDTO asesoriaDTO){
+    public ResponseEntity<AsesoriaDTO> update(@PathVariable("id") Long id,@Valid@RequestBody AsesoriaCreateUpdateDTO asesoriaCreateUpdateDTO){
 
-        AsesoriaDTO updateAsesoria = adminAsesoriaService.update(id,asesoriaDTO);
+        AsesoriaDTO updateAsesoria = adminAsesoriaService.update(id,asesoriaCreateUpdateDTO);
         return new ResponseEntity<>(updateAsesoria, HttpStatus.OK);
 
     }

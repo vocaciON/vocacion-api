@@ -35,20 +35,7 @@ public class ResultadoPrueba {
 
 
 
-    @OneToOne
-    @JoinColumn(name = "prueba_vocacion_id",referencedColumnName = "id",
-    foreignKey = @ForeignKey(name = "FK_resultado_prueba_prueba_vocacion"))
-    private PruebaVocacion pruebaVocacion;
 
-    @OneToOne
-    @JoinColumn(name = "usuario_id",referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "FK_resultado_prueba_usuario"))
-    private Usuario usuario;
-
-    @OneToOne
-    @JoinColumn(name = "perfil_id",referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "FK_resultado_prueba_perfil"))
-    private Perfil perfil;
     @OneToOne
     @JoinColumn(name = "carrera_id",referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "FK_resultado_prueba_carrera"))

@@ -37,24 +37,13 @@ public class Perfil {
     private LocalDateTime fechaUpdate;
 
 
-
     @OneToOne
-    @JoinColumn(name = "usuario_id",referencedColumnName = "id",
-    foreignKey = @ForeignKey(name = "FK_perfil_usuario"))
+    @JoinColumn(name = "usuario_id",referencedColumnName = "id")
     private Usuario usuario;
 
-
-
-
-
-
-
-    public void setCreatedAt(LocalDateTime now) {
-    }
-
-
-
-
-
+    @OneToOne
+    @JoinColumn(name = "contenido_educativo_id", referencedColumnName = "id",
+    foreignKey = @ForeignKey(name = "FK_perfil_contenido_educativo"))
+    private ContenidoEducativo contenidoEducativo;
 
 }

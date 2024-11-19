@@ -1,7 +1,6 @@
 package com.vocaciON.vocacion_service.model.entity;
 
-import com.vocaciON.vocacion_service.model.enums.EstadoPago;
-import com.vocaciON.vocacion_service.model.enums.Role;
+import com.vocaciON.vocacion_service.model.enums.ERole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -49,14 +47,19 @@ public class Usuario {
     private Date fechaNacimiento;
 
 
-// Agregando como se relacionan con las tablas
-
-//Clase usuario se asocia con perfil , pago, resultadoprueba,asesoria
-
-//Agregando los roles del enum a usuario
-    @Enumerated(EnumType.STRING)
-    @Column(name = "usuario_rol")
+// asociar la entidad role a usuario
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id", referencedColumnName = "id")
     private Role role;
+
+    // llamando al estudiante para su registro
+    @OneToOne(mappedBy = "usuario",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Perfil perfil;
+    // llamando al experto para su registro
+    @OneToOne(mappedBy = "usuario",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Experto experto;
+
+
 
 
 

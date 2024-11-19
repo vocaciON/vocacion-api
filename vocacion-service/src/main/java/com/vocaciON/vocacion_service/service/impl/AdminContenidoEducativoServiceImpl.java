@@ -1,7 +1,10 @@
 package com.vocaciON.vocacion_service.service.impl;
 
+import com.vocaciON.vocacion_service.dto.ContenidoEducativoCreateUpdateDTO;
 import com.vocaciON.vocacion_service.dto.ContenidoEducativoDTO;
 import com.vocaciON.vocacion_service.dto.ContenidoEducativoDTO;
+import com.vocaciON.vocacion_service.dto.ContenidoEducativoDetailsDTO;
+import com.vocaciON.vocacion_service.exception.ResourceNotFoundException;
 import com.vocaciON.vocacion_service.mapper.ContenidoEducativoMapper;
 import com.vocaciON.vocacion_service.model.entity.Asesoria;
 import com.vocaciON.vocacion_service.model.entity.ContenidoEducativo;
@@ -16,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -30,22 +35,23 @@ public class AdminContenidoEducativoServiceImpl implements AdminContenidoEducati
 
     @Transactional(readOnly = true)
     @Override
-    public List<ContenidoEducativoDTO> getAll() {
+    public List<ContenidoEducativoDetailsDTO> findAll() {
 
         List<ContenidoEducativo> contenidoEducativos = contenidoEducativoRepository.findAll();
 
-        return contenidoEducativos.stream().map(contenidoEducativoMapper::toDTO).toList();
+        return contenidoEducativos.stream().map(contenidoEducativoMapper::toDetailsDTO).toList();
     }
 
     @Transactional
     @Override
-    public ContenidoEducativoDTO create(ContenidoEducativoDTO contenidoEducativoDTO) { //crear
+    public ContenidoEducativoDetailsDTO create(ContenidoEducativoCreateUpdateDTO contenidoEducativoCreateUpdateDTO) { //crear
 
-        ContenidoEducativo contenidoEducativo = contenidoEducativoMapper.toEntity(contenidoEducativoDTO);
-        contenidoEducativo.setFechaCreate(LocalDateTime.now());
+        ContenidoEducativo contenidoEducativo = contenidoEducativoMapper.toEntity(contenidoEducativoCreateUpdateDTO);
+
+        contenidoEducativo.setCreatedAt(LocalDateTime.now());
         contenidoEducativo = contenidoEducativoRepository.save(contenidoEducativo);
 
-        return contenidoEducativoMapper.toDTO(contenidoEducativo);
+        return contenidoEducativoMapper.toDetailsDTO(contenidoEducativo);
     }
 
 
@@ -55,45 +61,51 @@ public class AdminContenidoEducativoServiceImpl implements AdminContenidoEducati
 
 
     @Override
-    public ContenidoEducativoDTO findById(Long id) { //buscar
+    public ContenidoEducativoDetailsDTO findById(Long id) { //buscar
         ContenidoEducativo contenidoEducativo = contenidoEducativoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Contenido Educativo con el id " + id + " no existe"));
-        return contenidoEducativoMapper.toDTO(contenidoEducativo);
+                .orElseThrow(() -> new ResourceNotFoundException("Contenido Educativo con el id " + id + " no existe"));
+        return contenidoEducativoMapper.toDetailsDTO(contenidoEducativo);
     }
 
     @Override
-    public ContenidoEducativoDTO update(Long id, ContenidoEducativoDTO updateContenidoEducativoDTO) {//actualizar
+    public ContenidoEducativoDetailsDTO update(Long id, ContenidoEducativoCreateUpdateDTO updateContenidoEducativoDTO) {//actualizar
+
+
         ContenidoEducativo contenidoEducativoFromDB = contenidoEducativoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("El contenido Educativo con el id " + id + " no existe"));
+                .orElseThrow(() -> new ResourceNotFoundException("El contenido Educativo con el id " + id + " no existe"));
 
         /*Perfil perfil = perfilRepository.findById(updateContenidoEducativoDTO.getPerfil().getId())
                 .orElseThrow(() -> new RuntimeException("Perfil no encontrado"+ updateContenidoEducativo.getPerfil().getId()));*/
 
 
 
-        contenidoEducativoFromDB.setContenido(updateContenidoEducativoDTO.getContenido());
-        contenidoEducativoFromDB.setFavorito(updateContenidoEducativoDTO.getFavorito());
         contenidoEducativoFromDB.setTituloContenido(updateContenidoEducativoDTO.getTituloContenido());
+        contenidoEducativoFromDB.setLink(updateContenidoEducativoDTO.getLink());
+        contenidoEducativoFromDB.setContenido(updateContenidoEducativoDTO.getContenido());
 
 
         /*contenidoEducativoFromDB.setPerfil(perfil);*/
 
 
         contenidoEducativoFromDB = contenidoEducativoRepository.save(contenidoEducativoFromDB);
-        return contenidoEducativoMapper.toDTO(contenidoEducativoFromDB);
+        return contenidoEducativoMapper.toDetailsDTO(contenidoEducativoFromDB);
     }
 
     @Override
     public void delete(Long id) {
         ContenidoEducativo contenidoEducativo = contenidoEducativoRepository
-                .findById(id).orElseThrow(() -> new RuntimeException("Contenido Educativo con el id " + id + " no existe"));
+                .findById(id).orElseThrow(() -> new ResourceNotFoundException("Contenido Educativo con el id " + id + " no existe"));
         contenidoEducativoRepository.delete(contenidoEducativo);
 
     }
 
-
-
-
+    @Override
+    public List<ContenidoEducativoDetailsDTO> findTop6ContenidoEducativoByCreatedAt() {
+        return contenidoEducativoRepository.findTop6ByOrderByCreatedAtDesc()
+                .stream()
+                .map(contenidoEducativoMapper::toDetailsDTO)
+                .toList();
+    }
 
 
 }

@@ -27,10 +27,6 @@ public class Respuesta {
     private LocalDateTime fechaCreate;
 
 
-    @OneToOne
-    @JoinColumn(name = "pregunta_id", referencedColumnName = "id",
-    foreignKey = @ForeignKey(name = "FK_respuesta_pregunta"))
-    private Pregunta pregunta;
 
     public void setCreatedAt(LocalDateTime now) {
 

@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/admin/respuestaUsuarios")
+@PreAuthorize("hastRole('ADMIN')")
 
 public class AdminRespuestaUsuarioController {
 
@@ -24,7 +26,7 @@ public class AdminRespuestaUsuarioController {
     // Responder las listas
     @GetMapping
     public ResponseEntity<List<RespuestaUsuarioDTO>> getListaRespuestaUsuario() {
-        List<RespuestaUsuarioDTO> respuestaUsuarios = AdminRespuestaUsuarioService.getAll();
+        List<RespuestaUsuarioDTO> respuestaUsuarios = adminRespuestaUsuarioService.getAll();
         return new ResponseEntity<>(respuestaUsuarios, HttpStatus.OK); //ok = 200
     }
 

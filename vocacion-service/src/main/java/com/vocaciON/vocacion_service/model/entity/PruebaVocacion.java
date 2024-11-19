@@ -47,4 +47,9 @@ public class PruebaVocacion {
     public static void setCreatedAd(LocalDateTime now) {
 
     }
+    @OneToMany
+    @JoinColumn(name = "preguntas_id",referencedColumnName = "id",
+     foreignKey = @ForeignKey(name = "FK_pruebaVocacion_pregunta"))
+    private List<Pregunta> preguntas;
+
 }

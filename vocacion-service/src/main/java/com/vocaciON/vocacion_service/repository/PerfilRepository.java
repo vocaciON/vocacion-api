@@ -7,5 +7,7 @@ import java.util.List;
 
 public interface PerfilRepository extends JpaRepository<Perfil, Long> {
 
+    //Verificar si existe un cliente con el mismo numero telefonico
+
 
 }

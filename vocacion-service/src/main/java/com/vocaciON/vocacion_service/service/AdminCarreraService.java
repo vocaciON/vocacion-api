@@ -3,6 +3,7 @@ package com.vocaciON.vocacion_service.service;
 import com.vocaciON.vocacion_service.model.entity.Carrera;
 import com.vocaciON.vocacion_service.dto.CarreraDTO;
 
+
 import java.util.List;
 
 public interface AdminCarreraService {
